@@ -52,11 +52,72 @@ el contenido de header.html debe volcarse dentro de la etiqueta seleccionada med
             include("header.html", "#page-header");
         </script>
 
-    <!-- Enlace al archivo register.html -->
-    <a href= " register.html ">Go to register.html </a >
+    <!--  <a href= "upload_picture.html"> Upload a new picture </a >-->
 
-    <h2 > Recent pictures </h2 >
-    <a href= "upload_picture.html"> Upload a new picture </a >
+    <!-- CODIGO DE FOTOS RECIENTES - Como: Usuario.
+Quiero: Poder ver un listado de las fotos públicas añadidas más
+recientemente a la aplicación. Este listado debería ser la
+pantalla que aparezca por defecto a los usuarios al abrir
+la aplicación, tanto si están autenticados como si no.
+Para: Estar al tanto de las novedades..
+ -->
+
+        <div class= " container ">
+
+            <div class= "row text-center ">
+                <div class= " col-md ">
+                    <h3 > Recent pictures </h3 >
+                </div >
+            </div >
+
+            <div class= "row text-center ">
+                <div class= " col-md-4 ">
+                    
+                    <div class= " card ">
+                        <a href= "photo_detail.html">
+                            <img src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg" class= " card-img-top ">
+                        </a >
+                        <div class= " card-body ">
+                            <h5 class= " card-title text-center "> Samoyed </h5 >
+                            <p class= " card-text ">A very good boy. </p >
+                            <p class= " text-right "> @user1 </p >
+                        </div >
+                    </div >
+
+                </div >
+                <div class= " col-md-4 ">
+                    
+                    <div class= " card ">
+                        <a href= "photo_detail.html">
+                            <img src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg" class= " card-img-top ">
+                        </a >
+                        <div class= " card-body ">
+                            <h5 class= " card-title text-center "> Nuria </h5 >
+                            <p class= " card-text ">Esto se aprueba </p >
+                            <p class= " text-right "> @user2 </p >
+                        </div >
+                    </div >
+
+                </div >
+                <div class= " col-md-4 ">
+                    
+                    <div class= " card ">
+                        <a href= "photo_detail.html">
+                            <img src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg" class= " card-img-top ">
+                        </a >
+                        <div class= " card-body ">
+                            <h5 class= " card-title text-center "> Foto 3 </h5 >
+                            <p class= " card-text ">Se puede </p >
+                            <p class= " text-right "> @user3 </p >
+                        </div >
+                    </div >
+
+                </div >
+            </div >
+
+        </div >
+
+ <!---------------------------------------------------------------------------------------------------------->
 
     <div class= "gallery-container">
 

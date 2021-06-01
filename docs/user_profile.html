@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+
+    <!-- Links para poder usar BOOTSTRAP -->
+    <meta name= "viewport" content= "width=device-width , initial-scale=1 , shrink-to-fit=no">
+    <link rel= "stylesheet" href= "/css/bootstrap.min.css ">
+    <link rel= "stylesheet" href= "/css/font-awesome.min.css">
+    <script src= "/js/libs/jquery-3.4.1.min.js "> </script>
+    <script src= "/js/libs/popper.min.js"> </script>
+    <script src= "/js/libs/bootstrap.min.js"> </script>
+
+    <!-- Enlace al archivo style.css -->
+    <link rel= "stylesheet" href= "/css/style.css">
+
+    <!-- Datos de la cabecera de la página -->
+    <title > Photo detail </title >
+    <link rel= "icon" href= "/images/favicon.ico">
+
+    <!-- Importamos include para poder importar la cabecera en todas las vistas-->
+    <script src= "/js/utils/include.js"> </script>
+
+  </head>
+  <!-- EXPLICACIÓN DE LA CABECERA - Incluiremos en la etiqueta <head> el archivo JavaScript include.js, que nos permite
+incluir un archivo HTML externo en una etiqueta de nuestra vista (este archivo se incluye por
+defecto en la plantilla del proyecto). En el cuerpo de la vista, definiremos una etiqueta vacía
+al principio, en cuyo interior se colocará automáticamente la cabecera. Finalmente, antes de
+terminar el cuerpo de la página, se incluye una línea de código JavaScript que indica que
+el contenido de header.html debe volcarse dentro de la etiqueta seleccionada mediante
+#page-header, es decir, aquella cuyo atributo id es el especificado. -->
+  <body>
+
+    <!-- Cosas para poder importar la cabecera en esta vista -->
+    <div id= "page-header"> </div >
+    <script>
+        include("header.html", "#page-header");
+    </script>
+    
+  </body>
+</html>

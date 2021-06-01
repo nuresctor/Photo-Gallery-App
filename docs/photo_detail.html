@@ -1,0 +1,97 @@
+<!DOCTYPE html >
+<!--Una opción común es mostrar en la página principal de galería la información básica de
+cada foto, y luego tener una vista dedicada a mostrar todos los detalles de una foto concreta.
+La manera habitual de hacer esto es pasar el ID de la foto en cuestión a la vista de detalle
+usando un parámetro URL, y mediante JavaScript capturar este parámetro y cargar los datos
+de la foto en cuestión. Sin embargo, dado que JavaScript se introducirá en los próximos laboratorios, nos limitaremos a crear una vista con datos HTML estáticos. En el futuro, será fácil
+modificarla para que cargue de manera dinámica los datos de cualquier foto aprovechando la
+estructura de la vista ya creada.
+-->
+    <html >
+        <head >
+
+        <!-- Links para poder usar BOOTSTRAP -->
+        <meta name= "viewport" content= "width=device-width , initial-scale=1 , shrink-to-fit=no">
+        <link rel= "stylesheet" href= "/css/bootstrap.min.css ">
+        <link rel= "stylesheet" href= "/css/font-awesome.min.css">
+        <script src= "/js/libs/jquery-3.4.1.min.js "> </script>
+        <script src= "/js/libs/popper.min.js"> </script>
+        <script src= "/js/libs/bootstrap.min.js"> </script>
+
+        <!-- Enlace al archivo style.css -->
+        <link rel= "stylesheet" href= "/css/style.css">
+
+        <!-- Datos de la cabecera de la página -->
+        <title > Photo detail </title >
+        <link rel= "icon" href= "/images/favicon.ico">
+
+        <!-- Importamos include para poder importar la cabecera en todas las vistas-->
+        <script src= "/js/utils/include.js"> </script>
+
+        </head>
+<!-- EXPLICACIÓN DE LA CABECERA - Incluiremos en la etiqueta <head> el archivo JavaScript include.js, que nos permite
+incluir un archivo HTML externo en una etiqueta de nuestra vista (este archivo se incluye por
+defecto en la plantilla del proyecto). En el cuerpo de la vista, definiremos una etiqueta vacía
+al principio, en cuyo interior se colocará automáticamente la cabecera. Finalmente, antes de
+terminar el cuerpo de la página, se incluye una línea de código JavaScript que indica que
+el contenido de header.html debe volcarse dentro de la etiqueta seleccionada mediante
+#page-header, es decir, aquella cuyo atributo id es el especificado. -->
+        <body>
+
+        <!-- Cosas para poder importar la cabecera en esta vista -->
+        <div id= "page-header"> </div >
+        <script>
+            include("header.html", "#page-header");
+        </script>
+
+        <!-- CODIGO VER FOTOS - Como: Usuario.
+Quiero: Poder ver en detalle cualquier foto pública de la aplicación, incluyendo toda su información y la puntuación que
+tiene asociada.
+Para: Poder conocer los detalles de cada foto-->
+
+        <div class= " container ">
+
+            <div class= "row text-center ">
+                <div class= " col-md ">
+
+                    <h3 > Samoyed </h3 >
+                    <h6 >A very good boy </h6 >
+                    <p> Uploaded by <a href= "user_profile.html"> User 1 </a > on 12/01/2021</p >
+                    <hr >
+                    <img src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg" class= " img-fluid ">
+                </div >
+
+                <div class= " col-md-3 ">
+
+                    <p>
+                        <button class= "btn btn-primary "> Edit this photo </button >
+                        <button class= "btn btn-danger "> Delete this photo </button >
+                    </p >
+
+                    <form >
+                        <div class= " form-group ">
+                            <label for= " rating-input "> Rate this photo: </label >
+                            <select id=" rating-input " name= " rating " class= "form-control">
+                                <option value= "1">* </option >
+                                <option value= "2">** </option >
+                                <option value= "3">*** </option >
+                                <option value= "4"> **** </option >
+                                <option value= "5"> ***** </option >
+                            </select >
+                            <button type= " submit " class= " btn btn-success "> Rate </button >
+                        </div >
+                    </form >
+
+                </div >
+            </div >
+
+            <div class= "row text-right ">
+                <div class= " col-md ">
+                    <a href= "index.html" class= " btn btn-primary "> Return to the gallery</a >
+                </div >
+            </div >
+            
+        </div>
+
+        </body>
+    </html>
