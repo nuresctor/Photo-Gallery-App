@@ -1,0 +1,112 @@
+
+<!-- 
+    Archivo que se muestra por defecto al acceder a la aplicación, por tanto debería contener la vista a la que se accederá cuando el usuario ingrese
+    a la aplicación. En nuestro caso, aprovecharemos el index.html para mostrar las fotos que
+    contiene la galería.
+    Dado que nuestra aplicación no cuenta aún con funcionalidad JavaScript, no podremos
+    comprobar si el usuario está logueado o no, a fin de mostrarle únicamente las opciones relevantes (por ejemplo, un usuario no logueado no puede crear fotos). En esta versión incluiremos todas las opciones disponibles, y más adelante aprenderemos a ocultarlas si es
+    necesario.
+ -->
+
+ <!-- Siguiendo el lab 2 -->
+
+ <!DOCTYPE html >
+<html >
+
+<head >
+    <!-- Enlace al archivo style.css -->
+    <link rel= "stylesheet" href= "/css/style.css">
+
+    <!-- Datos de la cabecera de la página -->
+    <title > Pagina de inicio </title >
+    <link rel= "icon" href= "/images/favicon.ico">
+
+    <!-- Importamos include para poder importar la cabecera en todas las vistas-->
+    <script src= "/js/utils/include.js"> </script>
+
+</head >
+
+<!-- EXPLICACIÓN DE LA CABECERA - Incluiremos en la etiqueta <head> el archivo JavaScript include.js, que nos permite
+incluir un archivo HTML externo en una etiqueta de nuestra vista (este archivo se incluye por
+defecto en la plantilla del proyecto). En el cuerpo de la vista, definiremos una etiqueta vacía
+al principio, en cuyo interior se colocará automáticamente la cabecera. Finalmente, antes de
+terminar el cuerpo de la página, se incluye una línea de código JavaScript que indica que
+el contenido de header.html debe volcarse dentro de la etiqueta seleccionada mediante
+#page-header, es decir, aquella cuyo atributo id es el especificado. -->
+
+<body >
+
+    <!-- Cosas para poder importar la cabecera en esta vista -->
+
+        <div id= "page-header"> </div >
+        <script>
+            include("header.html", "#page-header");
+        </script>
+
+    <!-- Enlace al archivo register.html -->
+    <a href= " register.html ">Go to register.html </a >
+
+    <h2 > Recent pictures </h2 >
+    <a href= "upload_picture.html"> Upload a new picture </a >
+
+    <div class= "gallery-container">
+
+        <!-- Our photo-blocks will be here -->
+
+        <div class= "photo-block">
+            <div class= "photo-header-block">
+                <h2 class= "photo-title"> Samoyed </h2 >
+                <h3 class= "photo-score"> Score: 4.52 </h3 >
+            </div >
+            <div class= "photo-image-block">
+                <img class= "photo-image" src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg">
+            </div >
+            <div class= "photo-metadata-block">
+                <p class= "photo-description">A very good boy. </p >
+            </div >
+            <div class= "photo-edit-block">
+                <button > Edit this photo </button >
+                <button > Delete this photo </button >
+            </div >
+        </div >
+
+        <div class= "photo-block">
+            <div class= "photo-header-block">
+                <h2 class= "photo-title"> Foto2 </h2 >
+                <h3 class= "photo-score"> Score: 10.0 </h3 >
+            </div >
+            <div class= "photo-image-block">
+                <img class= "photo-image" src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg">
+            </div >
+            <div class= "photo-metadata-block">
+                <p class= "photo-description">Segunda foto </p >
+            </div >
+            <div class= "photo-edit-block">
+                <button > Edit this photo </button >
+                <button > Delete this photo </button >
+            </div >
+        </div >
+
+        <div class= "photo-block">
+            <div class= "photo-header-block">
+                <h2 class= "photo-title"> Foto3 </h2 >
+                <h3 class= "photo-score"> Score: 5.0 </h3 >
+            </div >
+            <div class= "photo-image-block">
+                <img class= "photo-image" src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg">
+            </div >
+            <div class= "photo-metadata-block">
+                <p class= "photo-description">Tercera foto </p >
+            </div >
+            <div class= "photo-edit-block">
+                <button > Edit this photo </button >
+                <button > Delete this photo </button >
+            </div >
+        </div >
+
+    </div >
+
+
+</body >
+
+</html >
