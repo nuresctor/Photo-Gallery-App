@@ -26,7 +26,9 @@ una consulta a la API del proyecto.
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 import {parseHTML} from "/js/utils/parseHTML.js";
 import {photoRender} from "/js/renderers/photos.js";
-import {galleryRender} from '/js/renderers/gallery.js';
+import {galleryRender} from "/js/renderers/gallery.js";
+import {photosAPI} from "/js/api/photos.js";
+import {messageRenderer} from "/js/renderers/messages.js";
 " use strict ";
 
 /* ---------------------------------- CUERPO ---------------------------------------------- */
@@ -37,6 +39,20 @@ function main () {
 
     let container = document.querySelector("div.container");
 
+    /*
+    renderizar el array
+    de fotos obtenido de la API como una galería, y colocarla en el lugar correspondiente de la página. En caso de error, se mostrará en el <div id="errors"> creado gracias al renderizador
+    de mensajes
+    */
+
+    photosAPI.getAll()
+    .then( photos => {
+        let gallery = galleryRender.asCardGallery(photos);
+        container.appendChild(gallery);
+    })
+    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+
+    /*
     let photos = [
         {
         title: " Samoyed ",
@@ -63,9 +79,7 @@ function main () {
         url: "https://clipartart.com/images/worst-clipart-ever-1.jpg",
         date: "14/08/2019"} ,
         ];
-
-        let gallery = galleryRender.asCardGallery(photos);
-        container.appendChild(gallery);
+    */
 
     /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
 

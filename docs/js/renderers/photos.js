@@ -9,8 +9,10 @@ Esto nos permite añadir una foto a la galería dados sus atributos, sin tener q
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
 import {parseHTML} from "/js/utils/parseHTML.js"
-
+import {photosAPI} from "/js/api/photos.js";
+import {usersAPI} from "/js/api/users.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
+    
 
 const photoRender ={
 
@@ -18,18 +20,19 @@ const photoRender ={
 
         let html = `<div class="col-md-4">
         <div class= "card">
-        <a href= "photo_detail.html">
+        <a href= "photo_detail.html?photoId=${photo.photoId}">
         <img src= "${photo.url}" class= "card-img-top">
         </a >
         <div class= "card-body">
         <h5 class= "card-title text-center">${photo.title} </h5 >
         <p class= "card-text">${photo.description} </p >
-        <p class= "text-right">${photo.userId} </p >
+        <p class= "text-right user-name">${photo.userId} </p >
         </div >
         </div >
         </div >`;
     
         let card = parseHTML(html);
+        loadUsernameCard(card , photo.userId ) ;
     
         return card;
     },
@@ -50,5 +53,23 @@ const photoRender ={
     }
 
 };
+
+/*
+    función para añadir el nombre de usuario a una tarjeta ya creada de manera asíncrona, dadas
+    la tarjeta en sí (ya convertida en un nodo DOM) y el ID de usuario cuyo nombre deseamos
+    obtener
+*/
+
+function loadUsernameCard(card , userId ) {
+    usersAPI.getById(userId)
+    .then( users => {
+        let username = users[0].username;
+        console.log(username);
+        let p = card.querySelector("p.user-name") ;
+        p.textContent = "@" + username;
+
+    });
+
+}
 
 export {photoRender}

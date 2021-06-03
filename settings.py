@@ -9,15 +9,18 @@ DEBUG_ENABLED = False
 DB_CONN = {
     "host": "127.0.0.1",
     "port": 3306,
-    "username": "silence",
-    "password": "123456",
-    "database": "example_project",
+    "username": "u1",
+    "password": "u1",
+    "database": "pf",
 }
 
 # The sequence of SQL scripts located in the sql/ folder that must
 # be ran when the 'silence createdb' command is issued
 SQL_SCRIPTS = [
     # Reference your sql files here, e.g. "create_tables.sql"
+    "create_tables.sql",
+    "create_views.sql",
+    "populate_database.sql"
 ]
 
 # The port in which the API and the web server will be deployed

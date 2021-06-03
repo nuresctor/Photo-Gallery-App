@@ -31,6 +31,8 @@ estructura de la vista ya creada.
         <!-- Vinculacion archivo photo_detail.js -->
         <script src= "js/photo_detail.js" type= "module"> </script>
 
+        <script src="/js/libs/axios.min.js"></script>
+
         </head>
 <!-- EXPLICACIÓN DE LA CABECERA - Incluiremos en la etiqueta <head> el archivo JavaScript include.js, que nos permite
 incluir un archivo HTML externo en una etiqueta de nuestra vista (este archivo se incluye por
@@ -46,6 +48,7 @@ el contenido de header.html debe volcarse dentro de la etiqueta seleccionada med
         <script>
             include("header.html", "#page-header");
         </script>
+
 
         <!-- CODIGO VER FOTOS - Como: Usuario.
 Quiero: Poder ver en detalle cualquier foto pública de la aplicación, incluyendo toda su información y la puntuación que
