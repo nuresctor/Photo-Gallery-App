@@ -15,6 +15,8 @@ en una función, que accede a los campos relevantes para realizar una serie de c
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 " use strict ";
 import {messageRenderer} from "/js/renderers/messages.js";
+import {userValidator} from "/js/validators/users.js";
+
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
 function main () {
@@ -26,30 +28,16 @@ function main () {
 
 function handleSubmitRegister(event) {
 
+    //Para que no me refresque solo
+    event.preventDefault();
+
     let form = event.target;
     let formData = new FormData(form);
 
-    let errors = [];
-
-    /*VARIABLES FORMDATA INPUTS FORM */
-    let firstName = formData.get("firstName");
-    let lastName = formData.get("lastName");
-    let password = formData.ge("password");
-    let password2 = formData.get("password2");
-
-    console.log(formData.get("firstName"));
-
-
-    /*COMPROBACIONES DE ATRIBUTOS */
-    if(firstName.length < 3 || lastName.length < 3) {
-        errors.push("The first and last name should have more than 3 characters ");
-    }
-
-    if(password !== password2) {
-        errors.push("The passwords must match ");
-    }
-
     /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
+
+    let errors = userValidator.validateRegister(formData);
+
     if(errors.length > 0) {
         console.log(errors);
         let errorsDiv = document.getElementById("errors"); 
@@ -58,9 +46,13 @@ function handleSubmitRegister(event) {
         for(let error of errors) {
             messageRenderer.showErrorMessage(error);
         }
-    }   
+    }  else{
 
-    alert(" Form sent !") ;
+        alert(" Form sent !") ;
+
+        //aqui falta codigo
+
+    }
 
 }
 
