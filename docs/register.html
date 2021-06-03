@@ -46,6 +46,10 @@ el contenido de header.html debe volcarse dentro de la etiqueta seleccionada med
         <!-- Enlace al archivo index.html -->
         <a href= "index.html"> Return to the main page </a >
 
+        <!--DIV PARA LOS ERRORES DE VALIDACION DEL FORMULARIO-->
+        <div id="errors">
+        </div>
+
         <!-- Las label deben ser vinculadas al input correspondiente por razones
 de accesibilidad, lo cual se consigue haciendo que coincidan el atributo for del <label> con el
 id del <input>. -->
@@ -61,7 +65,7 @@ id del <input>. -->
             </div>
         </div>
 
-            <form >
+            <form id="register-form">
                 <div class= "row">
 
                     <div class= " col-md ">
@@ -130,7 +134,7 @@ id del <input>. -->
 
                 <div class= "row ">
                     <div class= " col-md text-center ">
-                        <button type= " submit " class= " btn btn-primary "> Register </button >
+                        <button type= "submit" class= " btn btn-primary "> Register </button >
                     </div >
                 </div >
 

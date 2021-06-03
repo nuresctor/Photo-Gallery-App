@@ -33,6 +33,8 @@ import {galleryRender} from '/js/renderers/gallery.js';
 
 function main () {
 
+    /*---------------------------------CODIGO PARA RELLENAR LA RENDER GALLERY--------------------------------------- */
+
     let container = document.querySelector("div.container");
 
     let photos = [
@@ -64,6 +66,28 @@ function main () {
 
         let gallery = galleryRender.asCardGallery(photos);
         container.appendChild(gallery);
+
+    /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
+
+    let cards = document.querySelectorAll(" div.card ") ;
+
+    for (let card of cards) {
+        card.onmouseenter = handleMouseEnter;
+        card.onmouseleave = handleMouseLeave;
+    }
+
+    function handleMouseEnter ( event ) {
+        let card = event.target;
+        card.style.backgroundColor = " black ";
+        card.style.color = " white ";
+    }
+
+    function handleMouseLeave ( event ) {
+        let card = event.target;
+        card.style.backgroundColor = " white ";
+        card.style.color = " black ";
+    }
+
 
 }
 
