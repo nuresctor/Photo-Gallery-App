@@ -15,7 +15,7 @@ librería axios
 " use_strict ";
 import {BASE_URL,requestOptions} from "./common.js";
 
-/*--------------------------------------------CUERPO------------------------------------------------------------------ */
+/*--------------------------------------------MODULO FOTOS API-------------------------------------------------------------- */
 const photosAPI = {
 
     getAll: function () {
@@ -34,7 +34,36 @@ const photosAPI = {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response.data.message));
         });
-    }
+    },
+
+    //////////////////////////FUNCIONES DE POST PUT DELETE PARA LAS FOTOS///////////////////////////////////////////
+
+    create: function( formData ) {
+        return new Promise ( function ( resolve , reject ) {
+        axios
+            .post(`${BASE_URL}/photos`, formData , requestOptions )
+            .then( response => resolve ( response.data ) )
+            .catch( error => reject ( error.response.data.message )) ;
+        }) ;
+        } ,
+        
+    update: function ( photoId , formData ) {
+        return new Promise ( function ( resolve , reject ) {
+        axios
+            .put(`${BASE_URL}/photos/${photoId}`, formData ,requestOptions )
+            .then( response => resolve ( response.data ) )
+            .catch( error => reject ( error.response.data.message )) ;
+        }) ;
+        } ,
+
+    delete: function ( photoId ) {
+        return new Promise ( function ( resolve , reject ) {
+        axios
+            .delete(`${BASE_URL}/photos/${photoId}`, requestOptions)
+            .then( response => resolve ( response.data ) )
+            .catch( error => reject ( error.response.data.message )) ;
+        }) ;
+        }
 
 };
 

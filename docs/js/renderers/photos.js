@@ -41,14 +41,14 @@ const photoRender ={
         let html = `<div class= "photo-details">
         <h3 >${photo.title} </h3 >
         <h6 >${photo.description} </h6 >
-        <p> Uploaded by <a href= "user_profile.html" class= "user-link">
-        User ${photo.userId} </a > on ${photo.date} </p >
+        <p> Uploaded by <a href= "user_profile.html" class= "user-link user-name">
+        ${photo.userId} </a > on ${photo.date} </p >
         <hr >
         <img src= "${photo.url}" class= "img-fluid">
         </div >`;
 
         let photoDetails = parseHTML(html);
-        
+        loadUsernameCardDetail(photoDetails , photo.userId ) ;
         return photoDetails;
     }
 
@@ -66,6 +66,20 @@ function loadUsernameCard(card , userId ) {
         let username = users[0].username;
         console.log(username);
         let p = card.querySelector("p.user-name") ;
+        p.textContent = "@" + username;
+
+    });
+
+}
+
+function loadUsernameCardDetail(card , userId ) {
+    usersAPI.getById(userId)
+    .then( users => {
+        let username = users[0].username;
+        console.log(username);
+        let p = card.querySelector("a.user-name") ;
+        console.log(card.querySelector("a.user-name"));
+        console.log(p.textContent);
         p.textContent = "@" + username;
 
     });

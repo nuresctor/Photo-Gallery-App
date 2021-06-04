@@ -83,7 +83,9 @@ function main () {
 
     /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
 
-    let cards = document.querySelectorAll(" div.card ") ;
+    let cards = document.querySelectorAll("div.card") ;
+
+        console.log(cards);
 
     for (let card of cards) {
         card.onmouseenter = handleMouseEnter;

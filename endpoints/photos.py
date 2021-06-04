@@ -25,7 +25,7 @@ def get_by_id():
     method="POST",
     sql="INSERT INTO Photos (title, description, url, visibility, userId) VALUES ($title, $description, $url, $visibility, $userId)",
     description="Creates a new photo",
-    auth_required=True,
+    auth_required=False,
 )
 def create(title, description, url, visibility, userId):
     pass
@@ -37,7 +37,7 @@ def create(title, description, url, visibility, userId):
     method="PUT",
     sql="UPDATE Photos SET title = $title, description = $description, url = $url, visibility = $visibility WHERE photoId = $photoId",
     description="Updates an existing photo",
-    auth_required=True,
+    auth_required=False,
 )
 def update(title, description, url, visibility):
     pass
@@ -49,7 +49,7 @@ def update(title, description, url, visibility):
     method="DELETE",
     sql="DELETE FROM Photos WHERE photoId = $photoId",
     description="Removes a photo",
-    auth_required=True,
+    auth_required=False,
 )
 def delete():
     pass
