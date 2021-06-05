@@ -4,8 +4,12 @@ import {parseHTML} from "/js/utils/parseHTML.js"
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
 import {messageRenderer} from "/js/renderers/messages.js";
-
+import {sessionManager} from "/js/utils/session.js";
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
+
+/*FUNCIONES PARA OCULTAR COSAS DE LA CABECERA*/
+
+
 
 /*FUNCION DESTINADA A GESTIONAR EL ENVIO DEL FORMULARIO DE CREACIÓN DE FOTOS
 
@@ -25,7 +29,8 @@ function handleSubmitPhoto(event) {
     if ( currentPhoto === null ) { // Creating a new photo
 
         // Add the current user 's ID
-        formData.append("userId", 1) ;
+        console.log("estoy por aqui"+sessionManager.getLoggedId());
+        formData.append("userId", sessionManager.getLoggedId()) ;
 
         photosAPI.create( formData )
             .then( data => window.location.href = "index.html")

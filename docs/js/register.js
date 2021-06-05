@@ -16,14 +16,28 @@ en una función, que accede a los campos relevantes para realizar una serie de c
 " use strict ";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {userValidator} from "/js/validators/users.js";
+import {sessionManager} from "/js/utils/session.js";
+import {authAPI} from "/js/api/auth.js";
 
-/* ---------------------------------- CUERPO ---------------------------------------------- */
+/* ---------------------------------- FUNCIONES AUXILIARES  ---------------------------------------------- */
+/*FUNCIONES PARA OCULTAR COSAS DE LA CABECERA*/
 
-function main () {
+/*
+respuesta tiene dos atributos: “sessionToken”, que
+contiene el token de sesión, y “user”, que contiene los datos del usuario. Estos dos parámetros
+son los requeridos por el método login() del módulo de gestión de sesiones, explicado en la
+Sección 5. Así, podemos guardarlos como variables y usarlos para iniciar sesión
+*/
 
-    let registerForm = document.getElementById("register-form") ;
-    registerForm.onsubmit = handleSubmitRegister;
-
+function sendRegister( formData ) {
+    authAPI.register( formData )
+    .then( loginData => {
+        let sessionToken = loginData.sessionToken;
+        let loggedUser = loginData.user;
+        sessionManager.login( sessionToken , loggedUser ) ;
+        window.location.href = "index.html";
+        })
+    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
     }
 
 function handleSubmitRegister(event) {
@@ -50,10 +64,21 @@ function handleSubmitRegister(event) {
 
         alert(" Form sent !") ;
 
-        //aqui falta codigo
+        sendRegister(formData) ;
 
     }
 
 }
+
+///////////////////////////////////////// MAIN ////////////////////////////////////////////////////////
+
+function main () {
+    
+
+    let registerForm = document.getElementById("register-form") ;
+    registerForm.onsubmit = handleSubmitRegister;
+
+    }
+
 
 document.addEventListener("DOMContentLoaded", main);

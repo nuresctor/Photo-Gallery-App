@@ -4,8 +4,17 @@ import {parseHTML} from "/js/utils/parseHTML.js"
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
 import {messageRenderer} from "/js/renderers/messages.js";
-
+import {sessionManager} from "/js/utils/session.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
+
+function hideActionsColumn() {
+    let actions_col = document.getElementById(" actions-col ") ;
+    console.log(actions_col);
+    if (!sessionManager.isLogged() ) {
+        actions_col.style.display = "none";
+    }
+    }
+    
 
 /* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
             El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
@@ -37,6 +46,8 @@ import {messageRenderer} from "/js/renderers/messages.js";
     };
 
 function main () {
+
+    hideActionsColumn() ;
 
     /*
     CODIGO PARA  En el caso del botón de borrado, crearemos
