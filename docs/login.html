@@ -1,0 +1,106 @@
+<!DOCTYPE html >
+<html >
+    <head >
+
+        <!-- Links para poder usar BOOTSTRAP -->
+        <meta name= "viewport" content= "width=device-width , initial-scale=1 , shrink-to-fit=no">
+        <link rel= "stylesheet" href= "/css/bootstrap.min.css ">
+        <link rel= "stylesheet" href= "/css/font-awesome.min.css">
+        <script src= "/js/libs/jquery-3.4.1.min.js "> </script>
+        <script src= "/js/libs/popper.min.js"> </script>
+        <script src= "/js/libs/bootstrap.min.js"> </script>
+
+        <!-- Enlace al archivo style.css -->
+        <link rel= "stylesheet" href= "/css/style.css">
+
+        <!-- Datos de la cabecera de la página -->
+        <title > Register form </title >
+        <link rel= "icon" href= "/images/favicon.ico">
+
+        <!-- Importamos include para poder importar la cabecera en todas las vistas-->
+        <script src= "/js/utils/include.js"> </script>
+
+        <!-- Vinculacion archivo register.js -->
+        <script src= "js/login.js" type= "module"> </script>
+
+        <!-- Vinculacion para importar AXIOS -->
+        <script src= "js/libs/axios.min.js"> </script>
+
+        <script src= "js/header.js" type= "module"> </script>
+
+    </head >
+
+<!-- EXPLICACIÓN DE LA CABECERA - Incluiremos en la etiqueta <head> el archivo JavaScript include.js, que nos permite
+incluir un archivo HTML externo en una etiqueta de nuestra vista (este archivo se incluye por
+defecto en la plantilla del proyecto). En el cuerpo de la vista, definiremos una etiqueta vacía
+al principio, en cuyo interior se colocará automáticamente la cabecera. Finalmente, antes de
+terminar el cuerpo de la página, se incluye una línea de código JavaScript que indica que
+el contenido de header.html debe volcarse dentro de la etiqueta seleccionada mediante
+#page-header, es decir, aquella cuyo atributo id es el especificado. -->
+
+    <body >
+
+
+        <!-- Cosas para poder importar la cabecera en esta vista -->
+
+        <div id= "page-header"> </div >
+            <script>
+                include("header.html", "#page-header");
+            </script>
+
+        <!-- Enlace al archivo index.html -->
+        <a href= "index.html"> Return to the main page </a >
+
+        <!--DIV PARA LOS ERRORES DE VALIDACION DEL FORMULARIO-->
+        <div id="errors">
+        </div>
+
+        <!-- Las label deben ser vinculadas al input correspondiente por razones
+de accesibilidad, lo cual se consigue haciendo que coincidan el atributo for del <label> con el
+id del <input>. -->
+    
+    <div class="container">
+
+        <br>
+
+        <div class= "row text-center">
+            <div class= " col-md ">
+                <h2 > INICIAR SESION </h2 >
+                <br>
+            </div>
+        </div>
+
+            <form id="register-form">
+
+                <div class= "row">
+                    <div class= " col-4 ">
+                        <div class="form-group">
+                            <label for= "username-input"> Username: </label >
+                            <input type= "text " id= "username-input" class="form-control" placeholder="username" name= "username" required >
+                        </div >
+                    </div>
+
+                    <div class= "col -4">
+                        <div class= "form-group">
+                            <label for= "password-input"> Password: </label >
+                            <input type= "password" id= "password-input" class="form-control" placeholder="password" name= "password" required>
+                        </div >
+                    </div>
+
+                </div>
+
+                <div class= "row ">
+                    <div class= " col-md text-center ">
+                        <button type= "submit" class= " btn btn-primary "> Login </button >
+                    </div >
+                </div >
+
+            </form >
+            
+    </div>
+</body >
+</html >
+
+
+
+    

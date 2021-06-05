@@ -22,6 +22,55 @@ import {authAPI} from "/js/api/auth.js";
 /* ---------------------------------- FUNCIONES AUXILIARES  ---------------------------------------------- */
 /*FUNCIONES PARA OCULTAR COSAS DE LA CABECERA*/
 
+function showUser() {
+
+    let title = document.getElementById("navbar-title") ;
+    console.log(title);
+    let text;
+
+    if ( sessionManager.isLogged() ) {
+        let username = sessionManager.getLoggedUser().username;
+        text = "Hi, @" + username;
+    } else {
+        text = "Anonymous";
+    }
+    
+    title.textContent = text;
+    
+}
+
+function addLogoutHandler() {
+
+    let logoutButton = document.getElementById(" navbar-logout ") ;
+
+    logoutButton.addEventListener("click", function () {
+        sessionManager.logout() ;
+        window.location.href = "index.html";
+    }) ;
+
+}
+
+function hideHeaderOptions() {
+
+    let headerRegister = document.getElementById(" navbar-register ") ;
+    let headerLogin = document.getElementById(" navbar-login ") ;
+    let headerLogout = document.getElementById(" navbar-logout ") ;
+    let headerRecent = document.getElementById(" navbar-recent ") ;
+    let headerCreate = document.getElementById(" navbar-create ") ;
+    
+    console.log("HOLA");
+
+    if ( sessionManager.isLogged() ) {
+        headerRegister.style.display = "none";
+        headerLogin.style.display = "none";
+    } else {
+        headerRecent.style.display = "none";
+        headerCreate.style.display = "none";
+        headerLogout.style.display = "none";
+    }
+
+}
+
 /*
 respuesta tiene dos atributos: “sessionToken”, que
 contiene el token de sesión, y “user”, que contiene los datos del usuario. Estos dos parámetros
@@ -74,6 +123,9 @@ function handleSubmitRegister(event) {
 
 function main () {
     
+    showUser();
+    addLogoutHandler();
+    hideHeaderOptions();
 
     let registerForm = document.getElementById("register-form") ;
     registerForm.onsubmit = handleSubmitRegister;
