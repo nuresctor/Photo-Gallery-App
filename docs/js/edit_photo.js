@@ -3,6 +3,7 @@
 import {parseHTML} from "/js/utils/parseHTML.js"
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
+import {wordValidator} from "/js/validators/words.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
@@ -12,7 +13,7 @@ import {sessionManager} from "/js/utils/session.js";
 function showUser() {
 
     let title = document.getElementById("navbar-title") ;
-    console.log(title);
+    //console.log(title);
     let text;
 
     if ( sessionManager.isLogged() ) {
@@ -45,8 +46,6 @@ function hideHeaderOptions() {
     let headerRecent = document.getElementById(" navbar-recent ") ;
     let headerCreate = document.getElementById(" navbar-create ") ;
     
-    console.log("HOLA");
-
     if ( sessionManager.isLogged() ) {
         headerRegister.style.display = "none";
         headerLogin.style.display = "none";
@@ -73,24 +72,84 @@ function handleSubmitPhoto(event) {
     let form = event.target;
     let formData = new FormData(form);
 
-    if ( currentPhoto === null ) { // Creating a new photo
+    if ( currentPhoto === null ) { // SI LA FOTO NO EXISTE
 
         // Add the current user 's ID
-        console.log("estoy por aqui"+sessionManager.getLoggedId());
+        
         formData.append("userId", sessionManager.getLoggedId()) ;
 
-        photosAPI.create( formData )
-            .then( data => window.location.href = "index.html")
-            .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+        //antes de crear quiero que pase la validacion de las palabras
 
-        } else { // Updating an existing photo
+        /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
+            
+            let errors = wordValidator.validateRegister(formData);
+
+            if(errors.length > 0) {
+
+                console.log("Viendo como coge el valor del selector");
+                let tempo=document.getElementById("input-visibility");
+                //TEMPO.VALUE es lo que me guarda el public/private
+                console.log(tempo.value);
+
+                console.log(errors);
+                let errorsDiv = document.getElementById("errors"); 
+                errorsDiv.innerHTML = "";
+                //para cada error, renderizalo
+                for(let error of errors) {
+                    messageRenderer.showErrorMessage(error);
+                }
+            }  else{
+
+                alert(" Foto creada !") ;
+
+                //creacion de foto-la añade al back
+
+                photosAPI.create( formData )
+                    .then( data => window.location.href = "index.html")
+                    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+
+    }
+
+        } else { //Si la foto existe, se edita
+
+            //antes quiero que pase el validator por si se edita el titulo o la descripcion
+            
+            formData.append("userId", sessionManager.getLoggedId()) ;
+
+            if (sessionManager.isLogged()){
+
+            }
 
             formData.append(" userId ", currentPhoto.userId ) ;
             formData.append(" date ", currentPhoto.date ) ;
 
+            //antes de crear quiero que pase la validacion de las palabras
+
+        /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
+
+        let errors = wordValidator.validateRegister(formData);
+            console.log("ERRORES="+errors);
+        if(errors.length > 0) {
+
+            //console.log(errors);
+            let errorsDiv = document.getElementById("errors"); 
+            errorsDiv.innerHTML = "";
+            //para cada error, renderizalo
+            for(let error of errors) {
+                messageRenderer.showErrorMessage(error);
+            }
+        }  else{
+
+            alert(" Foto editada !") ;
+
+            //creacion de foto-la añade al back
+
             photosAPI.update(photoId,formData)
                 .then( data => window.location.href = "index.html")
                 .catch( error => messageRenderer.showErrorAsAlert( error ) ) ;
+            }
+
+            
         }
 
 }
@@ -118,7 +177,6 @@ function loadCurrentPhoto() {
     let descriptionInput = document.getElementById("input-description") ;
     let visibilityInput = document.getElementById("input-visibility");
 
-    console.log(pageTitle);
     pageTitle.textContent = " Editing a photo ";
 
     photosAPI.getById( photoId )
@@ -130,7 +188,7 @@ function loadCurrentPhoto() {
         visibilityInput.value = currentPhoto.visibility;
         })
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;
-    }
+}
 
 /* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
             El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
@@ -141,7 +199,6 @@ function loadCurrentPhoto() {
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
-console.log(photoId);
 let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
 function main() {
@@ -152,8 +209,6 @@ function main() {
 
     let registerForm = document.getElementById("form-photo-upload");
     registerForm.onsubmit = handleSubmitPhoto;
-
-    console.log("hola");
 
     if (photoId!==null ) { 
         loadCurrentPhoto();

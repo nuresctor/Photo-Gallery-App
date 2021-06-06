@@ -1,8 +1,12 @@
+/*IMPORTACIONES*/
+
 " use strict ";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {userValidator} from "/js/validators/users.js";
 import {sessionManager} from "/js/utils/session.js";
 import {authAPI} from "/js/api/auth.js";
+
+/*FUNCIONES AUXILIARES*/
 
 function showUser() {
 
@@ -39,8 +43,6 @@ function hideHeaderOptions() {
     let headerLogout = document.getElementById(" navbar-logout ") ;
     let headerRecent = document.getElementById(" navbar-recent ") ;
     let headerCreate = document.getElementById(" navbar-create ") ;
-    
-    console.log("HOLA");
 
     if ( sessionManager.isLogged() ) {
         headerRegister.style.display = "none";
@@ -51,16 +53,6 @@ function hideHeaderOptions() {
         headerLogout.style.display = "none";
     }
 
-}
-
-function main(){
-
-    showUser();
-    addLogoutHandler();
-    hideHeaderOptions();
-
-    let form=document.getElementById("register-form");
-    form.onsubmit=formHandler;
 }
 
 function formHandler(event){
@@ -79,6 +71,16 @@ function sendLogin(formData){
             window.location.href="index.html";
         })
         .catch(error=>messageRenderer.showErrorMessage(error));
+}
+
+function main(){
+
+    showUser();
+    addLogoutHandler();
+    hideHeaderOptions();
+
+    let form=document.getElementById("register-form");
+    form.onsubmit=formHandler;
 }
 
 document.addEventListener("DOMContentLoaded",main);

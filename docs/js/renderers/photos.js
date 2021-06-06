@@ -64,7 +64,6 @@ function loadUsernameCard(card , userId ) {
     usersAPI.getById(userId)
     .then( users => {
         let username = users[0].username;
-        console.log(username);
         let p = card.querySelector("p.user-name") ;
         p.textContent = "@" + username;
 
@@ -76,10 +75,10 @@ function loadUsernameCardDetail(card , userId ) {
     usersAPI.getById(userId)
     .then( users => {
         let username = users[0].username;
-        console.log(username);
+        //console.log("usuario="+username);
         let p = card.querySelector("a.user-name") ;
-        console.log(card.querySelector("a.user-name"));
-        console.log(p.textContent);
+        //console.log(card.querySelector("a.user-name"));
+        //console.log(p.textContent);
         p.textContent = "@" + username;
 
     });

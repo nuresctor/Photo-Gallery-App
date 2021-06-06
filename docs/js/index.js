@@ -32,12 +32,24 @@ import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
 " use strict ";
 
-/* ---------------------------------- CUERPO ---------------------------------------------- */
+/* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
+
+function handleMouseEnter(event) {
+    let card = event.target;
+    card.style.backgroundColor = "black";
+    card.style.color = "white";
+}
+
+function handleMouseLeave(event) {
+    let card = event.target;
+    card.style.backgroundColor = "white";
+    card.style.color = "black";
+}
 
     function showUser() {
 
         let title = document.getElementById("navbar-title") ;
-        console.log(title);
+        //console.log(title);
         let text;
 
         if ( sessionManager.isLogged() ) {
@@ -70,8 +82,6 @@ import {sessionManager} from "/js/utils/session.js";
         let headerRecent = document.getElementById(" navbar-recent ") ;
         let headerCreate = document.getElementById(" navbar-create ") ;
         
-        console.log("HOLA");
-    
         if ( sessionManager.isLogged() ) {
             headerRegister.style.display = "none";
             headerLogin.style.display = "none";
@@ -84,6 +94,9 @@ import {sessionManager} from "/js/utils/session.js";
     }
 
 function main () {
+
+    let prueba=sessionManager.getLoggedUser();
+    console.log(prueba);
 
     showUser();
     addLogoutHandler();
@@ -106,7 +119,23 @@ function main () {
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
-    /*
+    /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
+
+    let cards = document.querySelectorAll("div.card") ;
+
+        console.log("cards="+cards);
+
+    for (let card of cards) {
+        card.onmouseenter = handleMouseEnter;
+        card.onmouseleave = handleMouseLeave;
+    }
+
+
+}
+
+document.addEventListener("DOMContentLoaded", main);
+
+/*
     let photos = [
         {
         title: " Samoyed ",
@@ -134,31 +163,3 @@ function main () {
         date: "14/08/2019"} ,
         ];
     */
-
-    /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
-
-    let cards = document.querySelectorAll("div.card") ;
-
-        console.log(cards);
-
-    for (let card of cards) {
-        card.onmouseenter = handleMouseEnter;
-        card.onmouseleave = handleMouseLeave;
-    }
-
-    function handleMouseEnter ( event ) {
-        let card = event.target;
-        card.style.backgroundColor = " black ";
-        card.style.color = " white ";
-    }
-
-    function handleMouseLeave ( event ) {
-        let card = event.target;
-        card.style.backgroundColor = " white ";
-        card.style.color = " black ";
-    }
-
-
-}
-
-document.addEventListener("DOMContentLoaded", main);

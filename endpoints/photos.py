@@ -21,6 +21,16 @@ def get_by_id():
 ###############################################################################
 
 @endpoint(
+    route="/photos/$userId",
+    method="GET",
+    sql="SELECT * FROM Photos P WHERE P.userId = $userId"
+)
+def get_by_id():
+    pass
+
+###############################################################################
+
+@endpoint(
     route="/photos",
     method="POST",
     sql="INSERT INTO Photos (title, description, url, visibility, userId) VALUES ($title, $description, $url, $visibility, $userId)",

@@ -27,12 +27,21 @@ const photosAPI = {
         });
     },
 
+    /*
+    Esta función devuelve una promesa, que se usa para encapsular código asíncrono.
+    una promesa se define en base a una función con dos
+    parámetros, resolve y reject, que son funciones. El interior de esta función contiene
+    el código que ha de ser ejecutado de manera asíncrona
+    */
+
     getById: function (photoId) {
-        return new Promise(function(resolve , reject) {
+
+        return new Promise(function(resolve , reject) { //la promesa puede ser resuelta o rechazada
         axios
-        .get(`${BASE_URL}/photos/${photoId}`, requestOptions)
-        .then(response => resolve(response.data))
-        .catch(error => reject(error.response.data.message));
+        .get(`${BASE_URL}/photos/${photoId}`, requestOptions) //URL del endpoint que queremos
+        .then(response => resolve(response.data)) //En este caso, resolvemos afirmativamente la promesa devolviendo los datos que ha proporcionado el servidor.
+        .catch(error => reject(error.response.data.message)); //caso de que recibamos objetos de tipo error
+
         });
     },
 

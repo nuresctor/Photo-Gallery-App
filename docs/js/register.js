@@ -20,12 +20,13 @@ import {sessionManager} from "/js/utils/session.js";
 import {authAPI} from "/js/api/auth.js";
 
 /* ---------------------------------- FUNCIONES AUXILIARES  ---------------------------------------------- */
+
 /*FUNCIONES PARA OCULTAR COSAS DE LA CABECERA*/
 
-function showUser() {
+function showUser() { //Hi, @
 
     let title = document.getElementById("navbar-title") ;
-    console.log(title);
+    
     let text;
 
     if ( sessionManager.isLogged() ) {
@@ -57,8 +58,6 @@ function hideHeaderOptions() {
     let headerLogout = document.getElementById(" navbar-logout ") ;
     let headerRecent = document.getElementById(" navbar-recent ") ;
     let headerCreate = document.getElementById(" navbar-create ") ;
-    
-    console.log("HOLA");
 
     if ( sessionManager.isLogged() ) {
         headerRegister.style.display = "none";
@@ -111,9 +110,8 @@ function handleSubmitRegister(event) {
         }
     }  else{
 
-        alert(" Form sent !") ;
-
         sendRegister(formData) ;
+        alert(" Form sent !") ;
 
     }
 
@@ -123,6 +121,7 @@ function handleSubmitRegister(event) {
 
 function main () {
     
+    //Funciones del menu
     showUser();
     addLogoutHandler();
     hideHeaderOptions();

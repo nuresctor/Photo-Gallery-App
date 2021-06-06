@@ -9,8 +9,9 @@ import {BASE_URL,requestOptions} from "./common.js";
 
 /*--------------------------------------------CUERPO------------------------------------------------------------------ */
 const usersAPI = {
-    getById: function (userId) {
-    return new Promise ( function ( resolve , reject ) {
+
+    getById: function(userId) {
+    return new Promise( function ( resolve , reject ) {
     axios
     .get(`${BASE_URL}/users/${userId}`, requestOptions)
     .then( response => resolve( response.data ) )

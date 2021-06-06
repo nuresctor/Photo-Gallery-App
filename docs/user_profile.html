@@ -23,6 +23,8 @@
     <!-- Vinculacion archivo user_profile.js -->
     <script src= "js/user_profile.js" type= "module"> </script>
 
+    <script src="/js/libs/axios.min.js"></script>
+
     <script src= "js/header.js" type= "module"> </script>
 
   </head>
@@ -40,6 +42,23 @@ el contenido de header.html debe volcarse dentro de la etiqueta seleccionada med
     <script>
         include("header.html", "#page-header");
     </script>
+
+  <div class= "container">
+
+  <div id="errors"> </div >
+
+  <div class= "row text-center ">
+      <div  id="user-details-column" class= " col-md ">
+          <h3 > PERFIL DE USUARIO </h3 >
+          <br>
+      </div >
+
+      <div  id="photos-details-column" class= " col-md "></div>
+      
+  </div >
+
+</div>
+
     
   </body>
 </html>

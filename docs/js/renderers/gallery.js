@@ -7,6 +7,7 @@
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 import {parseHTML} from "/js/utils/parseHTML.js";
 import {photoRender} from "/js/renderers/photos.js";
+import {sessionManager} from "/js/utils/session.js";
 " use strict ";
 
 /* ---------------------------------- CUERPO ---------------------------------------------- */
@@ -22,17 +23,43 @@ const galleryRender = {
 
         let counter = 0;
         for (let photo of photos) {
-            let card = photoRender.asCard(photo);
+            //console.log("visibilidad="+photo.visibility);
+            if(photo.visibility=='Public'){
+                let card = photoRender.asCard(photo);
             row.appendChild(card);
             counter+=1;
             if (counter%3 === 0) {
                 row = parseHTML('<div class= "row"> </div >');
                 galleryContainer.appendChild(row);
             }
+            }
+
         }
         return galleryContainer;
-    }
+    },
 
-};
+    asCardGallery2: function (photos) {
+
+        let userId = sessionManager.getLoggedId() ;
+        let galleryContainer = parseHTML('<div class= "photo-gallery"> </div >');
+        let row = parseHTML('<div class= "row"> </div >');
+
+        galleryContainer.appendChild(row);
+
+        let counter = 0;
+        for (let photo of photos) {
+            if(photo.userId==userId){
+                let card = photoRender.asCard(photo);
+                row.appendChild(card);
+                counter+=1;
+                if (counter%3 === 0) {
+                    row = parseHTML('<div class= "row"> </div >');
+                    galleryContainer.appendChild(row);
+                }
+            }
+        }
+        return galleryContainer;
+        }
+    };
 
 export {galleryRender};
