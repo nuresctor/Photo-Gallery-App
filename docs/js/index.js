@@ -32,7 +32,7 @@ import {sessionManager} from "/js/utils/session.js";
 
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
 
-//NO FUNCIONA
+
 
 function handleMouseEnter(event) {
     let card = event.target;
@@ -41,7 +41,7 @@ function handleMouseEnter(event) {
     card.style.color = "white";
 }
 
-//NO FUNCIONA
+
 
 function handleMouseLeave(event) {
     let card = event.target;
@@ -59,9 +59,20 @@ function handleMouseLeave(event) {
 
         if ( sessionManager.isLogged() ) {
             let username = sessionManager.getLoggedUser().username;
+            let id=sessionManager.getLoggedUser().userId;
+            let xdios='';
             text = "Hi, @" + username;
+            title.removeAttribute("href");
+        //console.log("HOLAAA"+sessionManager.getLoggedUser().userId);
+        //console.log("HOLAAA"+title.hasAttribute("href"));
+        xdios=xdios+'user_profile.html?userId='+id;
+        //console.log("ADIOSSS"+xdios);
+        title.setAttribute("href",xdios);
+        //console.log("HOLAAA"+title.hasAttribute("href"));
         } else {
             text = "Anonymous";
+            title.removeAttribute("href");
+           
         }
         
         title.textContent = text;
@@ -95,7 +106,7 @@ function handleMouseLeave(event) {
             headerRegister.style.display = "none";
             headerLogin.style.display = "none";
         } else {
-            headerRecent.style.display = "none";
+            //headerRecent.style.display = "none";
             headerCreate.style.display = "none";
             headerLogout.style.display = "none";
         }

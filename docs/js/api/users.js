@@ -1,6 +1,8 @@
 /*
 Esta operación requiere realizar una consulta GET al endpoint de usuarios, para poder
 conocer el nombre de un determinado usuario dado su ID
+
+DA ERROR
 */
 
 /*-------------------------------------------CABECERA--------------------------------------------------------------- */

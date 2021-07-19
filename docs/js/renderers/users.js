@@ -9,10 +9,10 @@ const userRender ={
 
     asDetails: function (user) {
         let html = `<div class= "navbar-brand">
-        <a href= "user_profile.html?userId=${user.userId}">
-        <h6 >username: ${user.username} </h6 >
-        <h6 >email: ${user.email} </h6 >
-        <h6 >telephone: ${user.telephone} </h6 >
+        <h6 >&#64${user.username} </h6 >
+        <h6 >&#128100 ${user.firstName} ${user.lastName} </h6 >
+        <h6 >&#128232 ${user.email} </h6 >
+        <h6 >&#9742 ${user.telephone} </h6 >
         <hr >
         </div >`;
 

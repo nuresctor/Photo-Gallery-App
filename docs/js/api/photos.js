@@ -2,6 +2,8 @@
 
 /*
 
+/API/V1/PHOTOS GETALL GETBYID CREATE POST PUT DELETE
+
 Esta función devuelve una promesa, que se usa para encapsular código asíncrono.
 Como ha aprendido en teoría, una promesa se define en base a una función con dos
 parámetros, resolve y reject, que son funciones. El interior de estas funciones contiene

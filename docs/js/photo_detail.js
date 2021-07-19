@@ -24,14 +24,25 @@ console.log("The photo ID to load is: " + photoId );
     function showUser() {
 
         let title = document.getElementById("navbar-title") ;
-    
+        //console.log(title);
         let text;
-    
+
         if ( sessionManager.isLogged() ) {
             let username = sessionManager.getLoggedUser().username;
+            let id=sessionManager.getLoggedUser().userId;
+            let xdios='';
             text = "Hi, @" + username;
+            title.removeAttribute("href");
+        //console.log("HOLAAA"+sessionManager.getLoggedUser().userId);
+        //console.log("HOLAAA"+title.hasAttribute("href"));
+        xdios=xdios+'user_profile.html?userId='+id;
+        //console.log("ADIOSSS"+xdios);
+        title.setAttribute("href",xdios);
+        //console.log("HOLAAA"+title.hasAttribute("href"));
         } else {
             text = "Anonymous";
+            title.removeAttribute("href");
+           
         }
         
         title.textContent = text;

@@ -54,15 +54,32 @@ const galleryRender = {
         galleryContainer.appendChild(row);
 
         let counter = 0;
-        for (let photo of photos) {
+        for (let photo of photos) { //No asustarse, todo este código es por lo del candado
+            console.log(photo.visibility);
             if(photo.userId==userId){
-                let card = photoRender.asCard(photo);
+                if(photo.visibility=='Private'){
+
+                    let card = photoRender.asCard3(photo);
                 row.appendChild(card);
                 counter+=1;
                 if (counter%3 === 0) {
                     row = parseHTML('<div class= "row"> </div >');
                     galleryContainer.appendChild(row);
                 }
+
+                }
+                else{
+
+                    let card = photoRender.asCard2(photo);
+                row.appendChild(card);
+                counter+=1;
+                if (counter%3 === 0) {
+                    row = parseHTML('<div class= "row"> </div >');
+                    galleryContainer.appendChild(row);
+                }
+
+                }
+                
             }
         }
         return galleryContainer;

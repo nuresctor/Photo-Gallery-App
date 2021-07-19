@@ -5,6 +5,7 @@ import {usersAPI} from "/js/api/users.js";
 import {photosAPI} from "/js/api/photos.js";
 import {userRender} from "/js/renderers/users.js";
 import {galleryRender} from "/js/renderers/gallery.js";
+
 /* CODIGO PARA VER POR CONSOLA EL ID DEL USUARIO
             El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
             que se encuentran en window.location.search. Con este objeto, podemos acceder a un
@@ -16,6 +17,23 @@ let urlParams = new URLSearchParams(window.location.search) ;
 let userId = sessionManager.getLoggedId() ;
 console.log("The user ID to load is: " + userId );
 
+//FUNCIONES AUXILIARES
+
+function handleMouseEnter(event) {
+    let card = event.target;
+    
+    card.style.backgroundColor = "black";
+    card.style.color = "white";
+}
+
+
+
+function handleMouseLeave(event) {
+    let card = event.target;
+    card.style.backgroundColor = "white";
+    card.style.color = "black";
+}
+
 function showUser() {
 
     let title = document.getElementById("navbar-title") ;
@@ -24,9 +42,20 @@ function showUser() {
 
     if ( sessionManager.isLogged() ) {
         let username = sessionManager.getLoggedUser().username;
+        let id=sessionManager.getLoggedUser().userId;
+        let xdios='';
         text = "Hi, @" + username;
+        title.removeAttribute("href");
+    //console.log("HOLAAA"+sessionManager.getLoggedUser().userId);
+    //console.log("HOLAAA"+title.hasAttribute("href"));
+    xdios=xdios+'user_profile.html?userId='+id;
+    //console.log("ADIOSSS"+xdios);
+    title.setAttribute("href",xdios);
+    //console.log("HOLAAA"+title.hasAttribute("href"));
     } else {
         text = "Anonymous";
+        title.removeAttribute("href");
+       
     }
     
     title.textContent = text;
@@ -69,20 +98,37 @@ function fotos_usuario() {
 
     let userContainer = document.querySelector("#user-details-column");
     let photosContainer = document.querySelector("#photos-details-column");
+
 //Columna de datos del usuario
+
     usersAPI.getById(userId)
     .then( users => {
         let userDetails = userRender.asDetails(users[0]) ; // ¿?
-        console.log(userDetails);
+        console.log("Detalles de usuario= "+userDetails);
         userContainer.appendChild(userDetails) ;
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+
 ///columna de fotos del usuario
+
     photosAPI.getAll()
     .then( photos => {
         console.log(photos);
         let gallery = galleryRender.asCardGallery2(photos);
         photosContainer.appendChild(gallery);
+
+        //ESTO ES POR LO DEL RATON
+
+        let cards = document.querySelectorAll("div.card") ;
+
+        console.log("cards="+cards);
+    
+    for (let card of cards) {
+        console.log(card);
+        card.onmouseenter = handleMouseEnter;
+        card.onmouseleave = handleMouseLeave;
+    }
+        
 
         //ver cuantas fotos tiene subidas un user
         
@@ -90,8 +136,8 @@ function fotos_usuario() {
     //console.log(cont);
     //console.log(cont.length);
     let tam=cont.length;
-        console.log("Tamaño="+tam);
-    return tam;
+        console.log("nº de fotos subidas="+tam);
+    
         
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
@@ -108,6 +154,8 @@ function main () {
     fotos_usuario();
 
     /*---------------------------------CODIGO PARA RELLENAR LA RENDER GALLERY--------------------------------------- */
+
+
 
 }
 
