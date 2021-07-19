@@ -86,7 +86,7 @@ console.log("The photo ID to load is: " + photoId );
         .catch( error => messageRenderer.showErrorMessage(error));
         }
     }
-
+    
     function handleEdit(event) {
         window.location.href = "edit_photo.html?photoId=" + photoId;
     };

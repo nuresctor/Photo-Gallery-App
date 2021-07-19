@@ -7,7 +7,7 @@ Como ha aprendido en teoría, una promesa se define en base a una función con d
 parámetros, resolve y reject, que son funciones. El interior de estas funciones contiene
 el código que ha de ser ejecutado de manera asíncrona.
 En el interior de la función asociada a la promesa se efectúa la petición AJAX usando la
-librería axios
+librería axios=facilita todo tipo de operaciones como cliente HTTP.
 
 */
 
@@ -16,7 +16,7 @@ librería axios
 import {BASE_URL,requestOptions} from "./common.js";
 
 /*--------------------------------------------MODULO FOTOS API-------------------------------------------------------------- */
-const photosAPI = {
+const photosAPI = { //MODULO PARA EXPORTAR FUNCIONES
 
     getAll: function () {
         return new Promise(function(resolve , reject) {
@@ -26,13 +26,6 @@ const photosAPI = {
         .catch( error => reject(error.response.data.message));
         });
     },
-
-    /*
-    Esta función devuelve una promesa, que se usa para encapsular código asíncrono.
-    una promesa se define en base a una función con dos
-    parámetros, resolve y reject, que son funciones. El interior de esta función contiene
-    el código que ha de ser ejecutado de manera asíncrona
-    */
 
     getById: function (photoId) {
 

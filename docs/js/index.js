@@ -1,7 +1,4 @@
 /* 
-Pese a que se puede escribir directamente el código a ejecutar fuera de cualquier función,
-esta no es una buena práctica. Se recomienda definir una función main, que se ejecutará
-cuando la página esté completamente cargada
 
 Un array es una lista ordenada de elementos, que no tienen por qué ser del mismo tipo (aunque se recomienda que lo sean, por
 consistencia). Un Object es similar a un diccionario
@@ -11,7 +8,7 @@ en un objeto correspondiente a un nodo HTML que podemos manipular mediante JS co
 hemos visto anteriormente
 
 document.createElement() no hace que éste aparezca inmediatamente en el documento HTML. Hasta que no se introduzca dentro de algún otro elemento de la página, el
-elemento creado no será visible
+elemento creado no será visible --> .append
 
 IDEA=El resultado es el mismo que en el apartado anterior, pero el código para generar el nodo
 HTML queda abstraído.
@@ -24,6 +21,7 @@ una consulta a la API del proyecto.
 */
 
 /* ---------------------------------- CABECERA ---------------------------------------------- */
+
 import {parseHTML} from "/js/utils/parseHTML.js";
 import {photoRender} from "/js/renderers/photos.js";
 import {galleryRender} from "/js/renderers/gallery.js";
@@ -34,17 +32,24 @@ import {sessionManager} from "/js/utils/session.js";
 
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
 
+//NO FUNCIONA
+
 function handleMouseEnter(event) {
     let card = event.target;
+    
     card.style.backgroundColor = "black";
     card.style.color = "white";
 }
+
+//NO FUNCIONA
 
 function handleMouseLeave(event) {
     let card = event.target;
     card.style.backgroundColor = "white";
     card.style.color = "black";
 }
+
+//MUESTRA QUIÉN ESTÁ LOGUEADO USUARIO-ANÓNIMO
 
     function showUser() {
 
@@ -63,6 +68,8 @@ function handleMouseLeave(event) {
         
     }
 
+//FUNCION DE CERRAR SESIÓN
+
     function addLogoutHandler() {
 
         let logoutButton = document.getElementById(" navbar-logout ") ;
@@ -73,6 +80,8 @@ function handleMouseLeave(event) {
         }) ;
     
     }
+
+    //OCULTA BOTONES 
     
     function hideHeaderOptions() {
     
@@ -93,18 +102,34 @@ function handleMouseLeave(event) {
     
     }
 
+    //MAIN SE EJECUTA CUANDO LA PÁGINA ESTÁ TOTALMENTE CARGADA
+
 function main () {
 
     let prueba=sessionManager.getLoggedUser();
-    console.log(prueba);
+    console.log("usuario logueado: " + prueba);
+    
+    
+    showUser(); //MUESTRA QUIÉN ESTÁ LOGUEADO USUARIO-ANÓNIMO
+    addLogoutHandler(); //FUNCION DE CERRAR SESIÓN
+    hideHeaderOptions();   //OCULTA BOTONES 
 
-    showUser();
-    addLogoutHandler();
-    hideHeaderOptions();
+    
 
     /*---------------------------------CODIGO PARA RELLENAR LA RENDER GALLERY--------------------------------------- */
 
     let container = document.querySelector("div.container");
+
+    /*
+
+    diferencia esta en que getElementById() tienes que hacer referencia a un elemento que tenga un id unico.
+Con querySelector() te devolvera el primer elemento que cumpla la condicion que especifiques... por ejemplo:
+1
+2
+document.querySelector("input") # devolvera el primer input
+document.querySelector(".class") # devolvera el primer elemento con la clase de css .class
+
+    */
 
     /*
     renderizar el array
@@ -116,20 +141,22 @@ function main () {
     .then( photos => {
         let gallery = galleryRender.asCardGallery(photos);
         container.appendChild(gallery);
-    })
-    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
-    /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
+          /*----------------------------------CODIGO PARA EVENTOS DE RATON------------------------------------- */
 
     let cards = document.querySelectorAll("div.card") ;
 
-        console.log("cards="+cards);
+    console.log("cards="+cards);
 
-    for (let card of cards) {
-        card.onmouseenter = handleMouseEnter;
-        card.onmouseleave = handleMouseLeave;
-    }
+for (let card of cards) {
+    console.log(card);
+    card.onmouseenter = handleMouseEnter;
+    card.onmouseleave = handleMouseLeave;
+}
+    })
+    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
+  
 
 }
 
