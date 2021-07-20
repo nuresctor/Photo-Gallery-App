@@ -12,6 +12,7 @@ const userValidator = {
         let lastName = formData.get("lastName");
         let password = formData.get("password");
         let password2 = formData.get("password2");
+        let email = formData.get("email");
 
         console.log(formData);
 
@@ -23,6 +24,7 @@ const userValidator = {
         if(password !== password2) {
             errors.push("The passwords must match ");
         }
+
 
     return errors;
 

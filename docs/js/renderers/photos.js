@@ -10,7 +10,6 @@ Esto nos permite añadir una foto a la galería dados sus atributos, sin tener q
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
 import {parseHTML} from "/js/utils/parseHTML.js"
-import {photosAPI} from "/js/api/photos.js";
 import {usersAPI} from "/js/api/users.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
@@ -23,7 +22,6 @@ import {usersAPI} from "/js/api/users.js";
 function loadUsernameCard(card , userId ) {
     usersAPI.getById(userId)
     .then( datos => {
-        console.log("QUE ES ESTO= "+datos);
         let username = datos[0].username;
         let p = card.querySelector("a.user-name") ;
         p.textContent = "@" + username;

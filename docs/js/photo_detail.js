@@ -1,13 +1,13 @@
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
-import {parseHTML} from "/js/utils/parseHTML.js"
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
+import {cabecera} from "/js/header.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
-/* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
+/* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO - NECESARIO 
             El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
             que se encuentran en window.location.search. Con este objeto, podemos acceder a un
             parámetro determinado usando urlParams.get(). Esto hará que se muestre por consola el
@@ -16,68 +16,12 @@ import {sessionManager} from "/js/utils/session.js";
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
-console.log("The photo ID to load is: " + photoId );
+//console.log("The photo ID to load is: " + photoId );
 
 
     ///////////////////////////////// FUNCIONES AUXILIARRES////////////////////////////////////////////
 
-    function showUser() {
-
-        let title = document.getElementById("navbar-title") ;
-        //console.log(title);
-        let text;
-
-        if ( sessionManager.isLogged() ) {
-            let username = sessionManager.getLoggedUser().username;
-            let id=sessionManager.getLoggedUser().userId;
-            let xdios='';
-            text = "Hi, @" + username;
-            title.removeAttribute("href");
-        //console.log("HOLAAA"+sessionManager.getLoggedUser().userId);
-        //console.log("HOLAAA"+title.hasAttribute("href"));
-        xdios=xdios+'user_profile.html?userId='+id;
-        //console.log("ADIOSSS"+xdios);
-        title.setAttribute("href",xdios);
-        //console.log("HOLAAA"+title.hasAttribute("href"));
-        } else {
-            text = "Anonymous";
-            title.removeAttribute("href");
-           
-        }
-        
-        title.textContent = text;
-        
-    }
-    
-    function addLogoutHandler() {
-    
-        let logoutButton = document.getElementById(" navbar-logout ") ;
-    
-        logoutButton.addEventListener("click", function () {
-            sessionManager.logout() ;
-            window.location.href = "index.html";
-        }) ;
-    
-    }
-    
-    function hideHeaderOptions() {
-    
-        let headerRegister = document.getElementById(" navbar-register ") ;
-        let headerLogin = document.getElementById(" navbar-login ") ;
-        let headerLogout = document.getElementById(" navbar-logout ") ;
-        let headerRecent = document.getElementById(" navbar-recent ") ;
-        let headerCreate = document.getElementById(" navbar-create ") ;
-    
-        if ( sessionManager.isLogged() ) {
-            headerRegister.style.display = "none";
-            headerLogin.style.display = "none";
-        } else {
-            //headerRecent.style.display = "none";
-            headerCreate.style.display = "none";
-            headerLogout.style.display = "none";
-        }
-    
-    }
+   
     
     function hideActionsColumn() {
         let actions_col = document.getElementById(" actions-col ") ;
@@ -117,11 +61,11 @@ function main () {
     let prueba = document.querySelector("form-control.option") ;
     console.log("LO QUE QUIERO="+prueba);
 
-    showUser();
-    addLogoutHandler();
-    hideHeaderOptions();
+    cabecera.showUser();
+    cabecera.addLogoutHandler();
+    cabecera.hideHeaderOptions();
 
-    hideActionsColumn() ;
+    hideActionsColumn() ; //oculta las opciones de editar, borrar y valorar foto
 
     /*
     CODIGO PARA  En el caso del botón de borrado, crearemos
@@ -145,7 +89,7 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
 
 
 
-    //código para mostrar en detalle cualquier foto solo proporcinando el id 
+    //código para mostrar en detalle cualquier foto solo proporcinando el id MUESTRA LA FOTO 
 
     let photoContainer = document.querySelector("#photo-details-column");
 

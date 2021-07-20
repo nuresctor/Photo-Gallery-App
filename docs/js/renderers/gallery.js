@@ -55,7 +55,7 @@ const galleryRender = {
 
         let counter = 0;
         for (let photo of photos) { //No asustarse, todo este código es por lo del candado
-            console.log(photo.visibility);
+          
             if(photo.userId==userId){
                 if(photo.visibility=='Private'){
 

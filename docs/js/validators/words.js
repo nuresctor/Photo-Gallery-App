@@ -2,13 +2,12 @@
 " use strict ";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {wordsAPI} from "/js/api/words.js";
-import {photosAPI} from "/js/api/photos.js";
 
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 const wordValidator = {
     validateRegister: function (formData) {
 
-        console.log(formData);
+        //console.log(formData);
 
         let arrayDB=[];
 
@@ -43,42 +42,13 @@ const wordValidator = {
                     errors.push("Palabra inapropiada="+palabra);
                 }
             }
-
-            //comprobacion de numero de fotos
-
             
+        //console.log("numero de errores="+errors.length);
+        console.log("errores de word="+errors);
 
-            
-        console.log("numero de errores="+errors.length);
+        let num = errors.length;
 
-        if(errors.length > 0) {
-
-            console.log("Viendo como coge el valor del selector");
-            let tempo=document.getElementById("input-visibility");
-            //TEMPO.VALUE es lo que me guarda el public/private
-            console.log(tempo.value);
-
-            console.log(errors);
-            let errorsDiv = document.getElementById("errors"); 
-            errorsDiv.innerHTML = "";
-            //para cada error, renderizalo
-            for(let error of errors) {
-                messageRenderer.showErrorMessage(error);
-            }
-        }  else{
-
-            alert(" Foto creada !") ;
-
-            //creacion de foto-la añade al back
-
-            photosAPI.create( formData )
-                .then( data => window.location.href = "index.html")
-                .catch( error => messageRenderer.showErrorMessage( error ) ) ;
-
-}
-
-    
-        return errors;
+        return num;
 
         })
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;

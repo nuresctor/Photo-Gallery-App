@@ -1,61 +1,23 @@
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
-import {parseHTML} from "/js/utils/parseHTML.js"
-import {photoRender} from "/js/renderers/photos.js";
+import {cabecera} from "/js/header.js";
 import {photosAPI} from "/js/api/photos.js";
 import {wordValidator} from "/js/validators/words.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
 
-/*FUNCIONES PARA OCULTAR COSAS DE LA CABECERA*/
+/* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
+            El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
+            que se encuentran en window.location.search. Con este objeto, podemos acceder a un
+            parámetro determinado usando urlParams.get(). Esto hará que se muestre por consola el
+            ID de la foto que debemos mostrar
+*/
 
-function showUser() {
+let urlParams = new URLSearchParams(window.location.search) ;
+let photoId = urlParams.get("photoId") ;
+let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
-    let title = document.getElementById("navbar-title") ;
-    //console.log(title);
-    let text;
-
-    if ( sessionManager.isLogged() ) {
-        let username = sessionManager.getLoggedUser().username;
-        text = "Hi, @" + username;
-    } else {
-        text = "Anonymous";
-    }
-    
-    title.textContent = text;
-    
-}
-
-function addLogoutHandler() {
-
-    let logoutButton = document.getElementById(" navbar-logout ") ;
-
-    logoutButton.addEventListener("click", function () {
-        sessionManager.logout() ;
-        window.location.href = "index.html";
-    }) ;
-
-}
-
-function hideHeaderOptions() {
-
-    let headerRegister = document.getElementById(" navbar-register ") ;
-    let headerLogin = document.getElementById(" navbar-login ") ;
-    let headerLogout = document.getElementById(" navbar-logout ") ;
-    let headerRecent = document.getElementById(" navbar-recent ") ;
-    let headerCreate = document.getElementById(" navbar-create ") ;
-    
-    if ( sessionManager.isLogged() ) {
-        headerRegister.style.display = "none";
-        headerLogin.style.display = "none";
-    } else {
-        headerRecent.style.display = "none";
-        headerCreate.style.display = "none";
-        headerLogout.style.display = "none";
-    }
-
-}
 
 /*FUNCION DESTINADA A GESTIONAR EL ENVIO DEL FORMULARIO DE CREACIÓN DE FOTOS
 
@@ -65,14 +27,18 @@ nueva foto creada. Si hay algún fallo, mostraremos el mensaje
 
 */
 
-function handleSubmitPhoto(event) {
+async function handleSubmitPhoto(event) {
 
     event.preventDefault();
 
     let form = event.target;
     let formData = new FormData(form);
 
-    if ( currentPhoto === null ) { // SI LA FOTO NO EXISTE
+    for(let p of formData.entries()){
+        console.log(p);
+    } // de momento mi formdata tiene url, titulo, descripcion y visibilidad. Vaya, los campos del formulario
+ 
+    if ( currentPhoto === null ) { // CREACION DE FOTO
 
         // Add the current user 's ID
         
@@ -82,16 +48,10 @@ function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
             
-            let errors = wordValidator.validateRegister(formData);
+            let errors = await wordValidator.validateRegister(formData);
 
-            if(errors.length > 0) {
+            if(errors > 0) {
 
-                console.log("Viendo como coge el valor del selector");
-                let tempo=document.getElementById("input-visibility");
-                //TEMPO.VALUE es lo que me guarda el public/private
-                console.log(tempo.value);
-
-                console.log(errors);
                 let errorsDiv = document.getElementById("errors"); 
                 errorsDiv.innerHTML = "";
                 //para cada error, renderizalo
@@ -104,22 +64,16 @@ function handleSubmitPhoto(event) {
 
                 //creacion de foto-la añade al back
 
-                photosAPI.create( formData )
+                photosAPI.create(formData)
                     .then( data => window.location.href = "index.html")
                     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
-    }
+                }
 
-        } else { //Si la foto existe, se edita
+   
 
-            //antes quiero que pase el validator por si se edita el titulo o la descripcion
+    } else { //EDICION DE FOTO
             
-            formData.append("userId", sessionManager.getLoggedId()) ;
-
-            if (sessionManager.isLogged()){
-
-            }
-
             formData.append(" userId ", currentPhoto.userId ) ;
             formData.append(" date ", currentPhoto.date ) ;
 
@@ -127,9 +81,9 @@ function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
 
-        let errors = wordValidator.validateRegister(formData);
-            console.log("ERRORES="+errors);
-        if(errors.length > 0) {
+        let errors = await wordValidator.validateRegister(formData);
+        
+        if(errors > 0) {
 
             //console.log(errors);
             let errorsDiv = document.getElementById("errors"); 
@@ -150,9 +104,9 @@ function handleSubmitPhoto(event) {
             }
 
             
-        }
+    }
 
-}
+};
 
 /*
                                         FUNCION DESTINADA A 
@@ -170,6 +124,8 @@ tenga la foto que estamos editando.
 */
 
 function loadCurrentPhoto() {
+
+    // document.getElementById están a null porque se toma como base el de creacion
 
     let pageTitle = document.getElementById("page-title") ;
     let urlInput = document.getElementById("input-url") ;
@@ -190,26 +146,17 @@ function loadCurrentPhoto() {
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 }
 
-/* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
-            El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
-            que se encuentran en window.location.search. Con este objeto, podemos acceder a un
-            parámetro determinado usando urlParams.get(). Esto hará que se muestre por consola el
-            ID de la foto que debemos mostrar
-*/
 
-let urlParams = new URLSearchParams(window.location.search) ;
-let photoId = urlParams.get("photoId") ;
-let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
 function main() {
 
-    showUser();
-    addLogoutHandler();
-    hideHeaderOptions();
+    cabecera.showUser();
+    cabecera.addLogoutHandler();
+    cabecera.hideHeaderOptions();
 
     let registerForm = document.getElementById("form-photo-upload");
     registerForm.onsubmit = handleSubmitPhoto;
-
+    
     if (photoId!==null ) { 
         loadCurrentPhoto();
     }
