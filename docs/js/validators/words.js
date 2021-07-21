@@ -2,14 +2,15 @@
 " use strict ";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {wordsAPI} from "/js/api/words.js";
-
+import {photosAPI} from "/js/api/photos.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 const wordValidator = {
-    validateRegister: function (formData) {
+    validateRegister: function (formData, photoId, currentPhoto) {
 
         //console.log(formData);
 
         let arrayDB=[];
+           let errors = [];
 
         //funcion que me saca las badwords del db
         wordsAPI.getAll()
@@ -22,7 +23,6 @@ const wordValidator = {
 
             console.log("array del db="+arrayDB);
 
-            let errors = [];
             //let words=["caca","culo","peo","pis"];
     
             /*VARIABLES FORMDATA INPUTS FORM */
@@ -39,16 +39,40 @@ const wordValidator = {
                     console.log("titulo="+titulo);
                     console.log("descripcion="+descripcion);
                     console.log("palabra="+palabra);
-                    errors.push("Palabra inapropiada="+palabra);
+                    errors.push(palabra);
                 }
             }
             
-        //console.log("numero de errores="+errors.length);
-        console.log("errores de word="+errors);
+        console.log("WORDS errores="+errors);
 
-        let num = errors.length;
+        if(errors.length > 0) {
 
-        return num;
+            let errorsDiv = document.getElementById("errors"); 
+            errorsDiv.innerHTML = "";
+            //para cada error, renderizalo 
+            for(let error of errors) {
+                messageRenderer.showErrorMessage(error);
+            }
+        }  else if (currentPhoto === null){
+            alert(" Foto creada !") ;
+    
+            //creacion de foto-la añade al back
+
+            photosAPI.create(formData)
+                .then( data => window.location.href = "index.html")
+                .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+        } else {
+    
+                alert(" Foto editada !") ;
+    
+                //creacion de foto-la añade al back
+    
+                photosAPI.update(photoId,formData)
+                    .then( data => window.location.href = "index.html")
+                    .catch( error => messageRenderer.showErrorAsAlert( error ) ) ;
+    
+        }
+
 
         })
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;

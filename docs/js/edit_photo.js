@@ -27,7 +27,7 @@ nueva foto creada. Si hay algún fallo, mostraremos el mensaje
 
 */
 
-async function handleSubmitPhoto(event) {
+function handleSubmitPhoto(event) {
 
     event.preventDefault();
 
@@ -48,29 +48,7 @@ async function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
             
-            let errors = await wordValidator.validateRegister(formData);
-
-            if(errors > 0) {
-
-                let errorsDiv = document.getElementById("errors"); 
-                errorsDiv.innerHTML = "";
-                //para cada error, renderizalo
-                for(let error of errors) {
-                    messageRenderer.showErrorMessage(error);
-                }
-            }  else{
-
-                alert(" Foto creada !") ;
-
-                //creacion de foto-la añade al back
-
-                photosAPI.create(formData)
-                    .then( data => window.location.href = "index.html")
-                    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
-
-                }
-
-   
+           wordValidator.validateRegister(formData, photoId, currentPhoto);
 
     } else { //EDICION DE FOTO
             
@@ -81,32 +59,12 @@ async function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
 
-        let errors = await wordValidator.validateRegister(formData);
-        
-        if(errors > 0) {
-
-            //console.log(errors);
-            let errorsDiv = document.getElementById("errors"); 
-            errorsDiv.innerHTML = "";
-            //para cada error, renderizalo
-            for(let error of errors) {
-                messageRenderer.showErrorMessage(error);
-            }
-        }  else{
-
-            alert(" Foto editada !") ;
-
-            //creacion de foto-la añade al back
-
-            photosAPI.update(photoId,formData)
-                .then( data => window.location.href = "index.html")
-                .catch( error => messageRenderer.showErrorAsAlert( error ) ) ;
-            }
+            wordValidator.validateRegister(formData, photoId, currentPhoto);
 
             
     }
 
-};
+}
 
 /*
                                         FUNCION DESTINADA A 
