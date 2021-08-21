@@ -60,7 +60,7 @@ const wordValidator = {
 
             photosAPI.create(formData)
                 .then( data => window.location.href = "index.html")
-                .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+                .catch( error => messageRenderer.showErrorMessage(error));
         } else {
     
                 alert(" Foto editada !") ;
@@ -69,7 +69,7 @@ const wordValidator = {
     
                 photosAPI.update(photoId,formData)
                     .then( data => window.location.href = "index.html")
-                    .catch( error => messageRenderer.showErrorAsAlert( error ) ) ;
+                    .catch( error => messageRenderer.showErrorMessage(error));
     
         }
 

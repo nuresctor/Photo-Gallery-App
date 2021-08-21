@@ -16,6 +16,7 @@ import {sessionManager} from "/js/utils/session.js";
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
+let userIdLOG = sessionManager.getLoggedId() ;
 let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
 

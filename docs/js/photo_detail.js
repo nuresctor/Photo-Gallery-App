@@ -16,6 +16,7 @@ import {cabecera} from "/js/header.js";
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
+let userIdLOG = sessionManager.getLoggedId() ;
 //console.log("The photo ID to load is: " + photoId );
 
 
@@ -53,7 +54,9 @@ let photoId = urlParams.get("photoId") ;
             fecha
             foto
         */
-       
+           
+            alert("Valoración guardada") ;
+            window.location.href = "index.html"
     };
 
 function main () {
@@ -78,6 +81,8 @@ En ese caso, el botón para editar foto de photo_detail.js se limitará a redire
 esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     */
 
+    
+
     let deleteBtn = document.querySelector("#button-delete") ;
     deleteBtn.onclick = handleDelete;
 
@@ -86,8 +91,6 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
 
     let rateBtn = document.querySelector("#button-rate") ;
     rateBtn.onclick = handleRate;
-
-
 
     //código para mostrar en detalle cualquier foto solo proporcinando el id MUESTRA LA FOTO 
 

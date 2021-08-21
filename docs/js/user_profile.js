@@ -14,7 +14,7 @@ import {cabecera} from "/js/header.js";
 */
 
 let urlParams = new URLSearchParams(window.location.search) ;
-let userId = sessionManager.getLoggedId() ;
+let userId = urlParams.get("userId");
 console.log("The user ID to load is: " + userId );
 
 //FUNCIONES AUXILIARES

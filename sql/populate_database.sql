@@ -13,3 +13,10 @@ VALUES
 
 
 -- Add some more data for your other tables...
+
+INSERT INTO BadWords
+VALUES
+	(1, 'caca'),
+	(2, 'culo'),
+	(3, 'peo'),
+	(4,'pis');

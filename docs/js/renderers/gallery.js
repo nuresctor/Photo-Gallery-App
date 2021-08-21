@@ -47,40 +47,56 @@ const galleryRender = {
 
     asCardGallery2: function (photos) { //VER LAS FOTOS DE UN USUARIO
 
-        let userId = sessionManager.getLoggedId() ;
+        let urlParams = new URLSearchParams(window.location.search) ;
+        let userIdURL = urlParams.get("userId");
+        let userIdLOG = sessionManager.getLoggedId() ;
         let galleryContainer = parseHTML('<div class= "photo-gallery"> </div >');
         let row = parseHTML('<div class= "row"> </div >');
 
         galleryContainer.appendChild(row);
 
         let counter = 0;
-        for (let photo of photos) { //No asustarse, todo este código es por lo del candado
+        for (let photo of photos) { //NO ASUSTARSE
           
-            if(photo.userId==userId){
-                if(photo.visibility=='Private'){
+            if(userIdLOG != userIdURL ) { //LOGEDUSER != USERID O NO ESTA LOGUEADO -> MOSTRAR LAS FOTOS DEL USERID
+                if(photo.userId==userIdURL){
+                    if(photo.visibility=='Public'){
+                        let card = photoRender.asCard2(photo);
+                        row.appendChild(card);
+                        counter+=1;
+                        if (counter%3 === 0) {
+                            row = parseHTML('<div class= "row"> </div >');
+                            galleryContainer.appendChild(row);
+                        }
+                    }
+                   
+                }
+            } else if (userIdLOG == userIdURL) { //LOGEDUSER = USERID -> MOSTRAR TODAS LAS FOTOS
 
-                    let card = photoRender.asCard3(photo);
-                row.appendChild(card);
-                counter+=1;
-                if (counter%3 === 0) {
-                    row = parseHTML('<div class= "row"> </div >');
-                    galleryContainer.appendChild(row);
+                if(photo.userId==userIdURL){
+                    if(photo.visibility=='Private'){ // ESTE CODIGO ES PARA AÑADIR EL CANDADO
+
+                        let card = photoRender.asCard3(photo);
+                    row.appendChild(card);
+                    counter+=1;
+                    if (counter%3 === 0) {
+                        row = parseHTML('<div class= "row"> </div >');
+                        galleryContainer.appendChild(row);
+                    }
+    
+                    } else{
+                        let card = photoRender.asCard2(photo);
+                    row.appendChild(card);
+                    counter+=1;
+                    if (counter%3 === 0) {
+                        row = parseHTML('<div class= "row"> </div >');
+                        galleryContainer.appendChild(row);
+                    }
+                    }
                 }
 
-                }
-                else{
-
-                    let card = photoRender.asCard2(photo);
-                row.appendChild(card);
-                counter+=1;
-                if (counter%3 === 0) {
-                    row = parseHTML('<div class= "row"> </div >');
-                    galleryContainer.appendChild(row);
-                }
-
-                }
-                
             }
+
         }
         return galleryContainer;
         }
