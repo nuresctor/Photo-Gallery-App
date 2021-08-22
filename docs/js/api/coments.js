@@ -16,7 +16,7 @@ const comentsAPI = { //MODULO PARA EXPORTAR FUNCIONES
     create: function( formData ) {
         return new Promise ( function ( resolve , reject ) {
         axios
-            .post(`${BASE_URL}/photos`, formData , requestOptions )
+            .post(`${BASE_URL}/coments`, formData , requestOptions )
             .then( response => resolve ( response.data ) )
             .catch( error => reject ( error.response.data.message )) ;
         }) ;

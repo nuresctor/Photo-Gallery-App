@@ -2,6 +2,7 @@
 "use strict"
 import {cabecera} from "/js/header.js";
 import {photosAPI} from "/js/api/photos.js";
+import {photos_usersAPI} from "/js/api/photos_users.js";
 import {wordValidator} from "/js/validators/words.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
@@ -16,7 +17,7 @@ import {sessionManager} from "/js/utils/session.js";
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
-let userIdLOG = sessionManager.getLoggedId() ;
+let userId = sessionManager.getLoggedId() ;
 let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
 
@@ -37,7 +38,9 @@ function handleSubmitPhoto(event) {
 
     for(let p of formData.entries()){
         console.log(p);
+        
     } // de momento mi formdata tiene url, titulo, descripcion y visibilidad. Vaya, los campos del formulario
+
  
     if ( currentPhoto === null ) { // CREACION DE FOTO
 
@@ -48,10 +51,26 @@ function handleSubmitPhoto(event) {
         //antes de crear quiero que pase la validacion de las palabras
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
-            
-           wordValidator.validateRegister(formData, photoId, currentPhoto);
 
-    } else { //EDICION DE FOTO
+        //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO - si el usuario ha subido al menos una foto
+
+    photos_usersAPI.getById(userId)
+    .then( data => {
+
+        if(data.length<2){
+            //Deja crear la foto
+            wordValidator.validateRegister(formData, photoId, currentPhoto);
+        }
+
+        else if(data.length>=2) { //si supera el límite
+            alert("HA SUPERADO EL LIMITE DE FOTOS QUE PUEDE SUBIR");
+        }
+        
+    })
+                .catch(  error => messageRenderer.showErrorMessage( error ));
+
+
+    } else if (currentPhoto !== null){ //EDICION DE FOTO
             
             formData.append(" userId ", currentPhoto.userId ) ;
             formData.append(" date ", currentPhoto.date ) ;
@@ -59,7 +78,7 @@ function handleSubmitPhoto(event) {
             //antes de crear quiero que pase la validacion de las palabras
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
-
+      
             wordValidator.validateRegister(formData, photoId, currentPhoto);
 
             
@@ -114,11 +133,12 @@ function main() {
     cabecera.hideHeaderOptions();
 
     let registerForm = document.getElementById("form-photo-upload");
-    registerForm.onsubmit = handleSubmitPhoto;
     
-    if (photoId!==null ) { 
+    if (photoId!==null ) { //EDICION DE FOTO
         loadCurrentPhoto();
     }
+
+    registerForm.onsubmit = handleSubmitPhoto; //CREACION DE FOTO
 
 }
 

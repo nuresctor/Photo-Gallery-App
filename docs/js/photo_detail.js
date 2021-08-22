@@ -16,7 +16,7 @@ import {cabecera} from "/js/header.js";
 
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
-let userIdLOG = sessionManager.getLoggedId() ;
+let userId = sessionManager.getLoggedId() ;
 //console.log("The photo ID to load is: " + photoId );
 
 
@@ -33,7 +33,7 @@ let userIdLOG = sessionManager.getLoggedId() ;
     }
 
     function handleDelete(event) {
-
+       
         let answer = confirm("Do you really want to delete this photo ?") ;
 
         if(answer) {
@@ -41,10 +41,15 @@ let userIdLOG = sessionManager.getLoggedId() ;
         .then( data => window.location.href = "index.html")
         .catch( error => messageRenderer.showErrorMessage(error));
         }
-    }
+    };
     
     function handleEdit(event) {
         window.location.href = "edit_photo.html?photoId=" + photoId;
+    };
+
+    function handleSend(event) {
+      
+        
     };
 
     function handleRate(event) {
@@ -54,9 +59,9 @@ let userIdLOG = sessionManager.getLoggedId() ;
             fecha
             foto
         */
-           
+            event.preventDefault();
             alert("Valoración guardada") ;
-            window.location.href = "index.html"
+            window.location.href = "index.html";
     };
 
 function main () {
@@ -89,6 +94,11 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     let editBtn = document.querySelector("#button-edit") ;
     editBtn.onclick = handleEdit;
 
+    /*
+     let sendBtn = document.querySelector("#button-send") ;
+    sendBtn.onclick = handleSend;
+    */
+    
     let rateBtn = document.querySelector("#button-rate") ;
     rateBtn.onclick = handleRate;
 

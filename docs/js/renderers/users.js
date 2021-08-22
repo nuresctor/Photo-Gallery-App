@@ -7,10 +7,10 @@ import {usersAPI} from "/js/api/users.js";
 
 const userRender ={
 
-    asDetails: function (user) {
+    asDetails: function (user) { //DATOS USUARIO
 
-        if(user.avatarUrl === ""){
-            user.avatarUrl = "https://www.movilzona.es/app/uploads-movilzona.es/2019/05/Foto-de-Perfil-en-WhatsApp.jpg?x=480&y=375&quality=20";
+        if(user.avatarUrl === ""){ //SI NO SE AÑADE FOTO DE PERFIL, SE AÑADE ESA
+            user.avatarUrl = "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
         }
 
         let html = `<div class= "navbar-brand">

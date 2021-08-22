@@ -17,24 +17,22 @@ const wordValidator = {
         .then( words => {
             
             for(let w of words){
-                //console.log("palabra="+w);
+
                 arrayDB.push(w.palabra);
             }
 
-            console.log("array del db="+arrayDB);
+            console.log("Palabras no permitidas="+arrayDB);
 
-            //let words=["caca","culo","peo","pis"];
+            //let arrayDB=["caca","culo","peo","pis"];
     
             /*VARIABLES FORMDATA INPUTS FORM */
     
             let titulo = formData.get("title");
             let descripcion = formData.get("description");
     
-            //console.log(words);
-    
             /*COMPROBACIONES DE ATRIBUTOS */
             for(let palabra of arrayDB){
-                //console.log(palabra);
+               
                 if(titulo.match(palabra) || descripcion.match(palabra)) {
                     console.log("titulo="+titulo);
                     console.log("descripcion="+descripcion);
@@ -53,19 +51,20 @@ const wordValidator = {
             for(let error of errors) {
                 messageRenderer.showErrorMessage(error);
             }
-        }  else if (currentPhoto === null){
-            alert(" Foto creada !") ;
+        }   else if (currentPhoto === null && errors.length === 0 ){ //SI NO HAY BAD WORDS, CREA/EDITA LA FOTO
     
             //creacion de foto-la añade al back
 
-            photosAPI.create(formData)
-                .then( data => window.location.href = "index.html")
-                .catch( error => messageRenderer.showErrorMessage(error));
-        } else {
+            photosAPI.create(formData).then( data => {
+                    alert(" Foto creada !") ;
+                    window.location.href = "index.html"
+                }
+                   ).catch( error => messageRenderer.showErrorMessage(error));
+        } else if(currentPhoto !== null && errors.length === 0) {
     
                 alert(" Foto editada !") ;
     
-                //creacion de foto-la añade al back
+                //editacion de la foto-la añade al back
     
                 photosAPI.update(photoId,formData)
                     .then( data => window.location.href = "index.html")

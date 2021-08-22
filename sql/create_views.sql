@@ -1,3 +1,4 @@
 CREATE OR REPLACE VIEW PhotosWithUsers AS
-    SELECT P.*, U.username, U.avatarUrl
+    SELECT P.photoId, U.userId
     FROM Photos P NATURAL JOIN Users U;
+

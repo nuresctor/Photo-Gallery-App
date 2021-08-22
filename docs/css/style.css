@@ -51,3 +51,10 @@ div.title-block {
     color: #555555;
     font-family: monospace;
 }
+
+.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+    padding-left: 0.8rem;
+}
