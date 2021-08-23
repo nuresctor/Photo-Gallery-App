@@ -2,6 +2,7 @@
 "use strict"
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
+import {ratingsAPI} from "/js/api/ratings.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
 import {cabecera} from "/js/header.js";
@@ -47,27 +48,50 @@ let userId = sessionManager.getLoggedId() ;
         window.location.href = "edit_photo.html?photoId=" + photoId;
     };
 
-    function handleSend(event) {
-      
-        
-    };
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
 
     function handleRate(event) {
-        /*
-        quiero que me guarde:
-            valoracion
-            fecha
-            foto
-        */
-            event.preventDefault();
-            alert("Valoración guardada") ;
-            window.location.href = "index.html";
-    };
+
+        event.preventDefault();
+        let form=event.target;
+        let formData=new FormData(form);
+        let fecha=new Date;
+        console.log(form);
+
+        formData.append("userId", userId ) ;
+        formData.append("date", formatDate(fecha)) ;
+        formData.append("photoId", photoId) ;
+
+        console.log(formData);
+        for(let p of formData.entries()){
+            console.log(p);
+        }
+
+        ratingsAPI.create(formData)
+        .then(Data=>{
+            alert("Valoración guardada correctamente");
+            window.location.href=window.location.search; //esto me refresca la pagina para actualizar la rating
+           
+        })
+        .catch(error=>console.log(error));
+
+ 
+};
+
 
 function main () {
-
-    let prueba = document.querySelector("form-control.option") ;
-    console.log("LO QUE QUIERO="+prueba);
 
     cabecera.showUser();
     cabecera.addLogoutHandler();
@@ -98,9 +122,9 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
      let sendBtn = document.querySelector("#button-send") ;
     sendBtn.onclick = handleSend;
     */
-    
-    let rateBtn = document.querySelector("#button-rate") ;
-    rateBtn.onclick = handleRate;
+
+    let form=document.getElementById("form-rating");
+    form.onsubmit=handleRate;
 
     //código para mostrar en detalle cualquier foto solo proporcinando el id MUESTRA LA FOTO 
 
@@ -110,6 +134,17 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     .then( photos => {
         let photoDetails = photoRender.asDetails( photos[0]) ; // la API siempre devuelve un array de fotos
         photoContainer.appendChild( photoDetails ) ;
+        ratingsAPI.getById( photoId ).then( //este codigo es para añadir el score
+            data => {
+    
+                console.log(data[0]);
+                var h = document.createElement("H1");
+                var t = document.createTextNode("Score="+data[0].avgrating);
+                h.appendChild(t);
+                photoContainer.appendChild( h);
+            }
+        ) .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+       
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 

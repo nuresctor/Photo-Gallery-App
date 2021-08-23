@@ -52,7 +52,7 @@ function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
 
-        //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO - si el usuario ha subido al menos una foto
+        //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO - si el usuario ha subido al menos una
 
     photos_usersAPI.getById(userId)
     .then( data => {

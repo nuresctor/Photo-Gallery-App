@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Ratings;
 DROP TABLE IF EXISTS BadWords;
 DROP TABLE IF EXISTS Photos;
 DROP TABLE IF EXISTS Users;
@@ -32,6 +33,16 @@ CREATE TABLE BadWords (
 	palabra VARCHAR(16) NOT NULL
 );
 
-
+CREATE TABLE Ratings(
+	ratingId INT NOT NULL AUTO_INCREMENT,
+	userId INT NOT NULL,
+	photoId INT NOT NULL,
+	date DATE,
+	value INT,
+	PRIMARY KEY (ratingId),
+	FOREIGN KEY (userId) REFERENCES Users (userId),
+	FOREIGN KEY (photoId) REFERENCES Photos (photoId) ON DELETE CASCADE,
+	CONSTRAINT invalidValue CHECK (value >= 1 AND value <= 5)
+);
 
 
