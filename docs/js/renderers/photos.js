@@ -10,6 +10,7 @@ Esto nos permite añadir una foto a la galería dados sus atributos, sin tener q
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
 import {parseHTML} from "/js/utils/parseHTML.js"
+import {photosAPI} from "/js/api/photos.js";
 import {usersAPI} from "/js/api/users.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
@@ -44,6 +45,16 @@ function loadUsernameCardDetail(card , userId ) {
 
 }
 
+function handleDelete(event) {
+       
+    let answer = confirm("Do you really want to delete this photo ?") ;
+
+    if(answer) {
+    photosAPI.delete(photoId)
+    .then( data => window.location.href = "index.html")
+    .catch( error => messageRenderer.showErrorMessage(error));
+    }
+};
 
 const photoRender ={
 
@@ -125,6 +136,8 @@ const photoRender ={
     }
 
 };
+
+//<a href="edit_photo.html?photoId=${photo.photoId}" + photoId;">&#128396 Editar</a> <a (click)='${f}' href="index.html">Borrar </a>
 
 
 

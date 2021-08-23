@@ -14,7 +14,7 @@ const userRender ={
         }
 
         let html = `<div class= "navbar-brand">
-        <img style="border: 2px solid; color: black;" src="${user.avatarUrl}" alt="Foto de perfil" width="200" height="200">
+        <img  src="${user.avatarUrl}" alt="Foto de perfil" width="200" height="200">
         <h6 >&#64${user.username} </h6 >
         <h6 >&#128100 ${user.firstName} ${user.lastName} </h6 >
         <h6 >&#128232 ${user.email} </h6 >

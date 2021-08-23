@@ -40,7 +40,7 @@ let userId = sessionManager.getLoggedId() ;
         if(answer) {
         photosAPI.delete(photoId)
         .then( data => window.location.href = "index.html")
-        .catch( error => messageRenderer.showErrorMessage(error));
+        .catch( error => console.log(error));
         }
     };
     
@@ -79,13 +79,36 @@ let userId = sessionManager.getLoggedId() ;
             console.log(p);
         }
 
-        ratingsAPI.create(formData)
-        .then(Data=>{
-            alert("Valoración guardada correctamente");
-            window.location.href=window.location.search; //esto me refresca la pagina para actualizar la rating
-           
-        })
-        .catch(error=>console.log(error));
+        //LIMITE DE VALORACIONES POR PERSONA
+
+        ratingsAPI.getAll().then(data=>{
+            console.log(data);
+            let lista= [];
+            for(let p of data){
+                //console.log(p.photoId);
+                //console.log(photoId);
+                if(photoId==p.photoId){
+                    lista.push(p.userId);
+                }
+            }
+            //console.log(lista);
+            if(lista.includes(userId)){
+                //console.log("YA VOTO WEI");
+                alert("YA HA VALORADO ESTA FOTO");
+
+            } else{
+                ratingsAPI.create(formData)
+                .then(Data=>{
+                    alert("Valoración guardada correctamente");
+                    window.location.href=window.location.search; //esto me refresca la pagina para actualizar la rating
+                   
+                })
+                .catch(error=>console.log(error));
+            }
+    
+        }).catch(error=>console.log(error));
+
+       
 
  
 };
@@ -139,7 +162,7 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     
                 console.log(data[0]);
                 var h = document.createElement("H1");
-                var t = document.createTextNode("Score="+data[0].avgrating);
+                var t = document.createTextNode("Puntuación media="+data[0].avgrating);
                 h.appendChild(t);
                 photoContainer.appendChild( h);
             }
