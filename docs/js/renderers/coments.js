@@ -8,14 +8,17 @@ const comentRender = {
 
     asCardGallery: function (coments, photoId) {
 
-        function asCard(c,user){
+        function asCard(c,user,f){
+            
             console.log("HOLA");
             let html = `<li>
             <article class="comment-inner">
             <div class= "flex-rox align-top">
             <div class= "flex-col">
-            <div class= "comment-author mr-half">
-            <img src= "${user.avatarUrl}" class= "img-circle" width="50" height="50" > <h6 style="font-weight:50"> ${c.date} </h6 >
+            <div class= "comment-author mr-half"> 
+            <a class="basura">🗑</a>
+            <img src= "${user.avatarUrl}" class= "img-circle" width="50" height="50" > <h6 style="font-weight:50"> ${c.date} </h6 > 
+            
             <div class= "flex-col flex-grow">
             <cite class="strong fn">
             <a href= "user_profile.html?userId=${c.userId}" class= "user-link user-name" >
@@ -48,12 +51,15 @@ const comentRender = {
         comentContainer.appendChild(row1);
         comentContainer.appendChild(row2);
 
+        
+
         for(let c of coments){
             //console.log("COMENTARIO "+c.value);
             usersAPI.getById(c.userId) //persona que ha escrito ese comentario
             .then( users => {
 
                 if(photoId==c.photoId){ //muestrame solo los comentarios de esa foto
+
              
                     let card = asCard(c,users[0]);
                     row.appendChild(card);

@@ -25,3 +25,14 @@ def get_all():
 )
 def get_by_id():
     pass
+
+@endpoint(
+    route="/coments/$comentId",
+    method="DELETE",
+    sql="DELETE FROM Coments WHERE comentId = $comentId",
+    description="Removes a coment"
+    
+)
+def delete():
+    pass
+

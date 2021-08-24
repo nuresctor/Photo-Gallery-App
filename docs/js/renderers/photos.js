@@ -111,11 +111,24 @@ const photoRender ={
     },
 
     asDetails: function (photo) {
+
+        function f(event) {
+       
+            let answer = confirm("Do you really want to delete this photo ?") ;
+    
+            if(answer) {
+            photosAPI.delete(photoId)
+            .then( data => window.location.href = "index.html")
+            .catch( error => console.log(error));
+            }
+        };
+
         let html = `<div class= "photo-details">
         <h3 >${photo.title} </h3 >
         <h6 >${photo.description} </h6 >
         <p> Uploaded by <a href= "user_profile.html?userId=${photo.userId}" class= "user-link user-name">
         ${photo.userId} </a > on ${photo.date} </p >
+        <a id="editar_foto">&#128396 Editar</a> <a id="borrar_foto"  >&#128465 Borrar</a>
         <hr >
         <img src= "${photo.url}" class= "img-fluid">
         </div >`;

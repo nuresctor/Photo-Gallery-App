@@ -31,12 +31,15 @@ let userId = sessionManager.getLoggedId() ;
     function hideActionsColumn() {
         let actions_col = document.getElementById(" actions-col ") ;
         let coment_col = document.getElementById("form-coment") ;
+        
         //console.log(actions_col);
         if (!sessionManager.isLogged() ) {
             actions_col.style.display = "none";
             coment_col.style.display="none";
+            
         }
     }
+
 
     function handleDelete(event) {
        
@@ -166,11 +169,18 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
 
     
 
+    /*
+LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
+
+    <button id="button-edit"  class= "btn btn-primary "> Edit this photo </button >
+    <button id="button-delete" class= "btn btn-danger "> Delete this photo </button >  
+
     let deleteBtn = document.querySelector("#button-delete") ;
     deleteBtn.onclick = handleDelete;
 
     let editBtn = document.querySelector("#button-edit") ;
     editBtn.onclick = handleEdit;
+    */
 
     
      let sendBtn = document.querySelector("#button-send") ;
@@ -186,10 +196,18 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
 
     comentsAPI.getAll()
     .then( coments => {
-        console.log(coments);
+        //console.log(coments);
         
                 let gallery = comentRender.asCardGallery(coments, photoId);
                 container.appendChild(gallery);
+
+                //codigo para borrar un comentario pulsando en la papelera
+
+    let listHTML=document.getElementsByClassName("comment-author mr-half");
+
+    for (let item of listHTML) {
+        console.log(item);
+    }
         
 
     })
@@ -203,6 +221,19 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     .then( photos => {
         let photoDetails = photoRender.asDetails( photos[0]) ; // la API siempre devuelve un array de fotos
         photoContainer.appendChild( photoDetails ) ;
+
+        //codigo para añadir el boton de borrar y moverlo a arriba que queda mejor
+            console.log("Foto cargada");
+            //document.getElementById ("borrar_foto").addEventListener ("click",console.log("Foto cargada2"));
+            document.getElementById ("borrar_foto").addEventListener ("click",handleDelete);
+            document.getElementById ("editar_foto").addEventListener ("click",handleEdit);
+
+            if (!sessionManager.isLogged() ) {
+    
+                document.getElementById ("borrar_foto").style.display="none";
+                document.getElementById ("editar_foto").style.display="none";
+            }
+        
         ratingsAPI.getById( photoId ).then( //este codigo es para añadir el score
             data => {
     
@@ -218,9 +249,13 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
+
+
 }
 
     document.addEventListener("DOMContentLoaded", main);
+    
+   
 
     /*
     let photo = {

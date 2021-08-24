@@ -24,6 +24,15 @@ const comentsAPI = { //MODULO PARA EXPORTAR FUNCIONES
         });
     },
 
+    delete: function ( comentId ) {
+        return new Promise ( function ( resolve , reject ) {
+        axios
+            .delete(`${BASE_URL}/coments/${comentId}`, requestOptions)
+            .then( response => resolve ( response.data ) )
+            .catch( error => reject ( error.response.data.message )) ;
+        }) ;
+        },
+
     create: function( formData ) {
         return new Promise ( function ( resolve , reject ) {
         axios
