@@ -13,6 +13,17 @@ const comentsAPI = { //MODULO PARA EXPORTAR FUNCIONES
         });
     },
 
+    getById: function (photoId) {
+
+        return new Promise(function(resolve , reject) { //la promesa puede ser resuelta o rechazada
+        axios
+        .get(`${BASE_URL}/coments/${photoId}`, requestOptions) //URL del endpoint que queremos
+        .then(response => resolve(response.data)) //En este caso, resolvemos afirmativamente la promesa devolviendo los datos que ha proporcionado el servidor.
+        .catch(error => reject(error.response.data.message)); //caso de que recibamos objetos de tipo error
+
+        });
+    },
+
     create: function( formData ) {
         return new Promise ( function ( resolve , reject ) {
         axios

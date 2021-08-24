@@ -45,16 +45,6 @@ function loadUsernameCardDetail(card , userId ) {
 
 }
 
-function handleDelete(event) {
-       
-    let answer = confirm("Do you really want to delete this photo ?") ;
-
-    if(answer) {
-    photosAPI.delete(photoId)
-    .then( data => window.location.href = "index.html")
-    .catch( error => messageRenderer.showErrorMessage(error));
-    }
-};
 
 const photoRender ={
 

@@ -20,3 +20,7 @@ VALUES
 	(2, 'culo'),
 	(3, 'peo'),
 	(4,'pis');
+
+INSERT INTO Coments(comentId, userId, photoId, value, date) VALUES
+	(1,2,1,"Qué mala pinta","2021-08-23 23:25:24"),
+	(2,2,1,"Quería decir buena*","2021-08-23 23:33:10");

@@ -73,11 +73,12 @@ Para: Poder conocer los detalles de cada foto-->
                         <hr >
                         <img src= "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg" class= " img-fluid ">
                     -->
-
+                    <div class="row" id="errors"></div>
                 </div >
+                
 
             </div>
-
+<!-- Editar/Borrar -->
                 <div class= "row text-center ">
                     <div class= " col-md " id= " actions-col ">
 
@@ -86,13 +87,29 @@ Para: Poder conocer los detalles de cada foto-->
                             <button id="button-edit"  class= "btn btn-primary "> Edit this photo </button >
                             <button id="button-delete" class= "btn btn-danger "> Delete this photo </button >  
                                 <form id="form-rating" class="form-group">
-                                    <input name="value" type="text" class"form-control" placeholder="Puntúa del 1 al 5" value="" />
-                                    <button class="btn bta-primary" type="submitButton"> Puntuar</button>
+                                    <input name="value" type="text"  placeholder="Puntúa del 1 al 5" value="" />
+                                    <button class="btn btn-dark" type="submitButton"> Puntuar</button>
                                 </form>        
                         </p >
                         
                     </div >
                 </div>
+<!-- Contenedor comentarios -->
+            <div class= "container2">
+            </div>
+            
+<!-- Añadir comentario -->
+            <div class= "row text-center mover ">
+                <div class= " col-md " id= " coments-col ">
+                    <form id="form-coment" class="form-group">
+                        <textarea class="form-control" id="ID" rows="3" value=""></textarea>
+                        <button id="button-send" class="btn btn-primary" type="submitButton">Enviar comentario</button>
+                    </form> 
+
+                </div>
+            </div>
+
+                
 
         
             

@@ -58,3 +58,12 @@ div.title-block {
 .shadow-textarea textarea.form-control {
     padding-left: 0.8rem;
 }
+
+.texto-encima{
+    position: absolute;
+    top: 99px;
+    left: 110px;
+    background-color: black;
+    color: white;
+}
+

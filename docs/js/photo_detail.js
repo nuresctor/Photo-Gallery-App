@@ -3,9 +3,12 @@
 import {photoRender} from "/js/renderers/photos.js";
 import {photosAPI} from "/js/api/photos.js";
 import {ratingsAPI} from "/js/api/ratings.js";
+import {comentsAPI} from "/js/api/coments.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
 import {cabecera} from "/js/header.js";
+import { comentRender } from "./renderers/coments.js";
+import {wordValidator} from "/js/validators/words.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
 /* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO - NECESARIO 
@@ -27,9 +30,11 @@ let userId = sessionManager.getLoggedId() ;
     
     function hideActionsColumn() {
         let actions_col = document.getElementById(" actions-col ") ;
+        let coment_col = document.getElementById("form-coment") ;
         //console.log(actions_col);
         if (!sessionManager.isLogged() ) {
             actions_col.style.display = "none";
+            coment_col.style.display="none";
         }
     }
 
@@ -46,6 +51,32 @@ let userId = sessionManager.getLoggedId() ;
     
     function handleEdit(event) {
         window.location.href = "edit_photo.html?photoId=" + photoId;
+    };
+
+    function handleSend(event) {
+
+        event.preventDefault();
+        let form=document.getElementById("form-coment");
+        let formData=new FormData(form);
+        let fecha=new Date;
+        console.log(form);
+        console.log(document.getElementById("ID").value);
+
+        formData.append("userId", userId ) ;
+        formData.append("date", formatDate(fecha)) ;
+        formData.append("photoId", photoId) ;
+        formData.append("value", document.getElementById("ID").value ) ;
+
+        console.log(formData);
+        for(let p of formData.entries()){
+            console.log(p);
+        }
+
+        //Ya tengo el formData relleno
+
+        wordValidator.validateRegister2(formData);
+
+
     };
 
     function formatDate(date) {
@@ -141,13 +172,28 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     let editBtn = document.querySelector("#button-edit") ;
     editBtn.onclick = handleEdit;
 
-    /*
+    
      let sendBtn = document.querySelector("#button-send") ;
     sendBtn.onclick = handleSend;
-    */
+    
 
     let form=document.getElementById("form-rating");
     form.onsubmit=handleRate;
+
+    //código para añadir los comentarios de esa foto
+
+    let container = document.querySelector("div.container2");
+
+    comentsAPI.getAll()
+    .then( coments => {
+        console.log(coments);
+        
+                let gallery = comentRender.asCardGallery(coments, photoId);
+                container.appendChild(gallery);
+        
+
+    })
+    .catch( error => console.log(error) ) ;
 
     //código para mostrar en detalle cualquier foto solo proporcinando el id MUESTRA LA FOTO 
 
@@ -162,7 +208,8 @@ esta vista, proporcionando el ID de foto correspondiente a la foto actual:
     
                 console.log(data[0]);
                 var h = document.createElement("H1");
-                var t = document.createTextNode("Puntuación media="+data[0].avgrating);
+                h.className = "texto-encima";
+                var t = document.createTextNode("⭐"+data[0].avgrating+" ");
                 h.appendChild(t);
                 photoContainer.appendChild( h);
             }
