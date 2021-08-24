@@ -38,6 +38,15 @@ let userId = sessionManager.getLoggedId() ;
             coment_col.style.display="none";
             
         }
+
+        photosAPI.getAll().then((data=>{
+            for(let f of data){
+                if(f.visibility=='Private'){
+                    coment_col.style.display="none";
+                }
+            }
+        })).catch(error=>console.log(error));
+        
     }
 
 
@@ -201,13 +210,10 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
                 let gallery = comentRender.asCardGallery(coments, photoId);
                 container.appendChild(gallery);
 
-                //codigo para borrar un comentario pulsando en la papelera
+                //aqui ya estan cargados los comentarios
 
-    let listHTML=document.getElementsByClassName("comment-author mr-half");
-
-    for (let item of listHTML) {
-        console.log(item);
-    }
+    let listHTML=document.querySelectorAll("a.basura");
+    console.log("comentarios cargados");
         
 
     })
@@ -223,7 +229,7 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
         photoContainer.appendChild( photoDetails ) ;
 
         //codigo para añadir el boton de borrar y moverlo a arriba que queda mejor
-            console.log("Foto cargada");
+            //console.log("Foto cargada");
             //document.getElementById ("borrar_foto").addEventListener ("click",console.log("Foto cargada2"));
             document.getElementById ("borrar_foto").addEventListener ("click",handleDelete);
             document.getElementById ("editar_foto").addEventListener ("click",handleEdit);

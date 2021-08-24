@@ -2,10 +2,12 @@
 "use strict"
 import {cabecera} from "/js/header.js";
 import {photosAPI} from "/js/api/photos.js";
+import {fallosAPI} from "/js/api/fallos.js";
 import {photos_usersAPI} from "/js/api/photos_users.js";
 import {wordValidator} from "/js/validators/words.js";
 import {messageRenderer} from "/js/renderers/messages.js";
 import {sessionManager} from "/js/utils/session.js";
+
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
 
 /* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO
@@ -53,22 +55,46 @@ function handleSubmitPhoto(event) {
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
 
         //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO - si el usuario ha subido al menos una
+        let dic={};
+        fallosAPI.getAll().then(
+            data=>{
+               
+                for(let d of data){
+                    //console.log(d);
+                    //Tengo la tabla
+                    dic[d.userId] = d.NUM;
+                 
+                }
 
-    photos_usersAPI.getById(userId)
-    .then( data => {
+                console.log(dic);
+                
+               
+            }
+        ).catch(error=>console.log(error));
 
-        if(data.length<2){
-            //Deja crear la foto
+        if(dic.hasOwnProperty(userId)){ //si el usuario ya ha subido alguna foto, quiero verifique la restriccion del limite de fotos
+            console.log("EY");
+
+            photos_usersAPI.getById(userId)
+            .then( data => {
+        
+                if(data.length<3){
+                    //Deja crear la foto
+                    wordValidator.validateRegister(formData, photoId, currentPhoto);
+                }
+        
+                else if(data.length>=3) { //si supera el límite
+                    alert("HA SUPERADO EL LIMITE DE FOTOS QUE PUEDE SUBIR");
+                }
+                
+            })
+                        .catch(  error => messageRenderer.showErrorMessage( error ));
+        
+        } else{ //quiere decir que el usuario todavia no ha subido una, asi que solo word
             wordValidator.validateRegister(formData, photoId, currentPhoto);
         }
 
-        else if(data.length>=2) { //si supera el límite
-            alert("HA SUPERADO EL LIMITE DE FOTOS QUE PUEDE SUBIR");
-        }
-        
-    })
-                .catch(  error => messageRenderer.showErrorMessage( error ));
-
+   
 
     } else if (currentPhoto !== null){ //EDICION DE FOTO
             

@@ -8,7 +8,11 @@ const comentRender = {
 
     asCardGallery: function (coments, photoId) {
 
-        function asCard(c,user,f){
+        function asCard(c,user){
+
+            if(user.avatarUrl === ""){ //SI NO SE AÑADE FOTO DE PERFIL, SE AÑADE ESA
+                user.avatarUrl = "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
+            }
             
             console.log("HOLA");
             let html = `<li>
@@ -16,7 +20,7 @@ const comentRender = {
             <div class= "flex-rox align-top">
             <div class= "flex-col">
             <div class= "comment-author mr-half"> 
-            <a class="basura">🗑</a>
+           
             <img src= "${user.avatarUrl}" class= "img-circle" width="50" height="50" > <h6 style="font-weight:50"> ${c.date} </h6 > 
             
             <div class= "flex-col flex-grow">
@@ -40,6 +44,8 @@ const comentRender = {
             console.log("HOLA2");
             return card;
         }
+        
+// <a class="basura">🗑</a>
 
         let comentContainer = parseHTML('<div class= "coment-gallery"> </div >');
         let row = parseHTML('<h1 > COMENTARIOS </h1 >');
