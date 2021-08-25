@@ -25,16 +25,11 @@ import {cabecera} from "/js/header.js";
 
 /* ---------------------------------- FUNCIONES AUXILIARES ---------------------------------------------- */
 
-
-
 function handleMouseEnter(event) {
     let card = event.target;
-    
     card.style.backgroundColor = "black";
     card.style.color = "white";
 }
-
-
 
 function handleMouseLeave(event) {
     let card = event.target;
@@ -76,11 +71,12 @@ document.querySelector(".class") # devolvera el primer elemento con la clase de 
 
     console.log("cards="+cards);
 
-for (let card of cards) {
-    console.log(card);
-    card.onmouseenter = handleMouseEnter;
-    card.onmouseleave = handleMouseLeave;
-}
+    for (let card of cards) {
+        console.log(card);
+        card.onmouseenter = handleMouseEnter;
+        card.onmouseleave = handleMouseLeave;
+    }
+
     })
     .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
@@ -89,32 +85,3 @@ for (let card of cards) {
 }
 
 document.addEventListener("DOMContentLoaded", main);
-
-/*
-    let photos = [
-        {
-        title: " Samoyed ",
-        description: "A very good boy. ",
-        userId: 1 ,
-        url: "https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg",
-        date: "15/08/2020"} ,
-        {
-        title: " Spanish tortilla ",
-        description: " With onion ",
-        userId: 2 ,
-        url: "https://llevatilde.es/imagetexts/2/2f/otra.png",
-        date: "01/01/2021"} ,
-        {
-        title: " Seville ",
-        description: "The beautiful city of Seville ",
-        userId: 3 ,
-        url: "https://urbansevilla.es/wp-content/uploads/2019/03/urban-sevilla-foto-ciudad.jpg",
-        date: "03/02/2019"} ,
-        {
-        title: " Abstract art ",
-        description: " Clipart ",
-        userId: 4 ,
-        url: "https://clipartart.com/images/worst-clipart-ever-1.jpg",
-        date: "14/08/2019"} ,
-        ];
-    */

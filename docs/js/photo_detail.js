@@ -11,23 +11,12 @@ import { comentRender } from "./renderers/coments.js";
 import {wordValidator} from "/js/validators/words.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
-/* CODIGO PARA VER POR CONSOLA EL ID DE LA FOTO - NECESARIO 
-            El objeto URLSearchParams sirve para acceder más fácilmente a los parámetros de URL,
-            que se encuentran en window.location.search. Con este objeto, podemos acceder a un
-            parámetro determinado usando urlParams.get(). Esto hará que se muestre por consola el
-            ID de la foto que debemos mostrar
-*/
-
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
 let userId = sessionManager.getLoggedId() ;
-//console.log("The photo ID to load is: " + photoId );
-
 
     ///////////////////////////////// FUNCIONES AUXILIARRES////////////////////////////////////////////
 
-   
-    
     function hideActionsColumn() {
         let actions_col = document.getElementById(" actions-col ") ;
         let coment_col = document.getElementById("form-coment") ;
@@ -48,7 +37,6 @@ let userId = sessionManager.getLoggedId() ;
         })).catch(error=>console.log(error));
         
     }
-
 
     function handleDelete(event) {
        
@@ -71,6 +59,7 @@ let userId = sessionManager.getLoggedId() ;
         let form=document.getElementById("form-coment");
         let formData=new FormData(form);
         let fecha=new Date;
+
         console.log(form);
         console.log(document.getElementById("ID").value);
 
@@ -163,20 +152,7 @@ function main () {
     cabecera.addLogoutHandler();
     cabecera.hideHeaderOptions();
 
-    hideActionsColumn() ; //oculta las opciones de editar, borrar y valorar foto
-
-    /*
-    CODIGO PARA  En el caso del botón de borrado, crearemos
-una función que pregunte al usuario si realmente desea eliminar la foto mediante la función
-confirm()1
-. En el caso de una respuesta afirmativa, usaremos el módulo de API para emitir
-una petición DELETE y devolveremos al usuario a la página principal
-
-En ese caso, el botón para editar foto de photo_detail.js se limitará a redireccionar a
-esta vista, proporcionando el ID de foto correspondiente a la foto actual:
-    */
-
-    
+    hideActionsColumn() ; 
 
     /*
 LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
@@ -191,11 +167,9 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
     editBtn.onclick = handleEdit;
     */
 
-    
-     let sendBtn = document.querySelector("#button-send") ;
+     let sendBtn = document.querySelector("#button-send") ; //boton de enviar comentario
     sendBtn.onclick = handleSend;
     
-
     let form=document.getElementById("form-rating");
     form.onsubmit=handleRate;
 
@@ -209,15 +183,8 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
         
                 let gallery = comentRender.asCardGallery(coments, photoId);
                 container.appendChild(gallery);
-
-                //aqui ya estan cargados los comentarios
-
-    let listHTML=document.querySelectorAll("a.basura");
-    console.log("comentarios cargados");
         
-
-    })
-    .catch( error => console.log(error) ) ;
+    }).catch( error => console.log(error) ) ;
 
     //código para mostrar en detalle cualquier foto solo proporcinando el id MUESTRA LA FOTO 
 
@@ -228,7 +195,8 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
         let photoDetails = photoRender.asDetails( photos[0]) ; // la API siempre devuelve un array de fotos
         photoContainer.appendChild( photoDetails ) ;
 
-        //codigo para añadir el boton de borrar y moverlo a arriba que queda mejor
+        //CODIGO PARA AÑADIR LOS BOTONES DE EDITAR Y BORRAR ARRIBA, QUE QUEDA MEJOR
+
             //console.log("Foto cargada");
             //document.getElementById ("borrar_foto").addEventListener ("click",console.log("Foto cargada2"));
             document.getElementById ("borrar_foto").addEventListener ("click",handleDelete);
@@ -261,15 +229,3 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
 
     document.addEventListener("DOMContentLoaded", main);
     
-   
-
-    /*
-    let photo = {
-        title: " Samoyed ",
-        description: "A very good boy. ",
-        userId: 1 ,
-        url: " https://i.ibb.co/tY1Jcnc/wlZCfCv.jpg",
-        date: "12/01/1996"
-    };
-    */
-        

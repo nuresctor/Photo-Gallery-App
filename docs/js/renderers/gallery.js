@@ -21,7 +21,7 @@ import {sessionManager} from "/js/utils/session.js";
 
 const galleryRender = {
     
-    asCardGallery: function (photos) {
+    asCardGallery: function (photos) { //Muestra las fotos del index
 
         let galleryContainer = parseHTML('<div class= "photo-gallery"> </div >');
         let row = parseHTML('<div class= "row"> </div >');
@@ -30,17 +30,15 @@ const galleryRender = {
 
         let counter = 0;
         for (let photo of photos) {
-            //console.log("visibilidad="+photo.visibility);
             if(photo.visibility=='Public'){
                 let card = photoRender.asCard(photo);
-            row.appendChild(card);
-            counter+=1;
-            if (counter%3 === 0) {
-                row = parseHTML('<div class= "row"> </div >');
-                galleryContainer.appendChild(row);
+                row.appendChild(card);
+                counter+=1;
+                if (counter%3 === 0) {
+                    row = parseHTML('<div class= "row"> </div >');
+                    galleryContainer.appendChild(row);
+                }
             }
-            }
-
         }
         return galleryContainer;
     },
@@ -69,7 +67,6 @@ const galleryRender = {
                             galleryContainer.appendChild(row);
                         }
                     }
-                   
                 }
             } else if (userIdLOG == userIdURL) { //LOGEDUSER = USERID -> MOSTRAR TODAS LAS FOTOS
 
@@ -77,21 +74,22 @@ const galleryRender = {
                     if(photo.visibility=='Private'){ // ESTE CODIGO ES PARA AÑADIR EL CANDADO
 
                         let card = photoRender.asCard3(photo);
-                    row.appendChild(card);
-                    counter+=1;
-                    if (counter%3 === 0) {
-                        row = parseHTML('<div class= "row"> </div >');
-                        galleryContainer.appendChild(row);
-                    }
+                        row.appendChild(card);
+                        counter+=1;
+
+                        if (counter%3 === 0) {
+                            row = parseHTML('<div class= "row"> </div >');
+                            galleryContainer.appendChild(row);
+                        }
     
                     } else{
                         let card = photoRender.asCard2(photo);
-                    row.appendChild(card);
-                    counter+=1;
-                    if (counter%3 === 0) {
-                        row = parseHTML('<div class= "row"> </div >');
-                        galleryContainer.appendChild(row);
-                    }
+                        row.appendChild(card);
+                        counter+=1;
+                        if (counter%3 === 0) {
+                            row = parseHTML('<div class= "row"> </div >');
+                            galleryContainer.appendChild(row);
+                        }
                     }
                 }
 

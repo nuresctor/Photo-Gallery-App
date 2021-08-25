@@ -1,7 +1,7 @@
 " use_strict ";
 import {BASE_URL,requestOptions} from "./common.js";
 
-/*--------------------------------------------CUERPO------------------------------------------------------------------ */
+/*---------------------------TABLA QUE ME RELACIONA USUARIOS QUE HAN SUBIDO FOTOS Y EL NUMERO DE FOTOS --------------------------- */
 const fallosAPI = {
 
     getAll: function() {

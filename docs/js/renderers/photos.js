@@ -1,11 +1,4 @@
-/* 
-AÑADIR LO DEL ID EN EL LINK DE LOS USUARIOS
 
-El const define una clase o módulo, y dentro tenemos una funcion
-
-Esto nos permite añadir una foto a la galería dados sus atributos, sin tener que preocuparnos de generar su estructura HTML
-
-*/
 
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
@@ -111,17 +104,6 @@ const photoRender ={
     },
 
     asDetails: function (photo) {
-
-        function f(event) {
-       
-            let answer = confirm("Do you really want to delete this photo ?") ;
-    
-            if(answer) {
-            photosAPI.delete(photoId)
-            .then( data => window.location.href = "index.html")
-            .catch( error => console.log(error));
-            }
-        };
 
         let html = `<div class= "photo-details">
         <h3 >${photo.title} </h3 >

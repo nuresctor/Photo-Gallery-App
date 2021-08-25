@@ -3,10 +3,9 @@ import {sessionManager} from "/js/utils/session.js";
 
 const cabecera ={
 
-     showUser: function() {
+     showUser: function() { //FUNION QUE AÑADE LA PERSONA QUE ESTA LOGUEADA EN LA CABECERA
 
         let title = document.getElementById("navbar-title") ;
-        //console.log(title);
         let text;
     
         if ( sessionManager.isLogged() ) {
@@ -15,16 +14,14 @@ const cabecera ={
             let xdios='';
             text = "Hola, @" + username;
             title.removeAttribute("href");
-        //console.log("HOLAAA"+sessionManager.getLoggedUser().userId);
-        //console.log("HOLAAA"+title.hasAttribute("href"));
-        xdios=xdios+'user_profile.html?userId='+id;
-        //console.log("ADIOSSS"+xdios);
-        title.setAttribute("href",xdios);
-        //console.log("HOLAAA"+title.hasAttribute("href"));
+     
+            xdios=xdios+'user_profile.html?userId='+id;
+        
+            title.setAttribute("href",xdios);
+     
         } else {
             text = "Anonymous";
             title.removeAttribute("href");
-           
         }
         
         title.textContent = text;

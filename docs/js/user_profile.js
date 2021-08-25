@@ -70,10 +70,9 @@ function fotos_usuario() {
     //console.log(cont);
     //console.log(cont.length);
     let tam=cont.length;
-        console.log("nº de fotos subidas="+tam);
+    console.log("nº de fotos subidas="+tam);
     
-    })
-    .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+    }).catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
 
 }

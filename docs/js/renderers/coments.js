@@ -1,6 +1,5 @@
 "use strict"
 import {parseHTML} from "/js/utils/parseHTML.js"
-import {comentsAPI} from "/js/api/coments.js";
 import {usersAPI} from "/js/api/users.js";
 
 const comentRender = {
@@ -14,7 +13,6 @@ const comentRender = {
                 user.avatarUrl = "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
             }
             
-            console.log("HOLA");
             let html = `<li>
             <article class="comment-inner">
             <div class= "flex-rox align-top">
@@ -41,7 +39,7 @@ const comentRender = {
             </li >`;
            
             let card = parseHTML(html);
-            console.log("HOLA2");
+           
             return card;
         }
         
@@ -57,24 +55,19 @@ const comentRender = {
         comentContainer.appendChild(row1);
         comentContainer.appendChild(row2);
 
-        
-
         for(let c of coments){
-            //console.log("COMENTARIO "+c.value);
+           
             usersAPI.getById(c.userId) //persona que ha escrito ese comentario
             .then( users => {
 
                 if(photoId==c.photoId){ //muestrame solo los comentarios de esa foto
-
-             
+             //Renderiza los comentarios
                     let card = asCard(c,users[0]);
                     row.appendChild(card);
         
                     }
 
-                users[0]
-            })
-            .catch( error => console.log(error) ) ;
+            }).catch( error => console.log(error) ) ;
 
         }
 

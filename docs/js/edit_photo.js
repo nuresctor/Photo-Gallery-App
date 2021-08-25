@@ -22,16 +22,15 @@ let photoId = urlParams.get("photoId") ;
 let userId = sessionManager.getLoggedId() ;
 let currentPhoto=null; //almacena los atributos de la foto que estamos editando
 
+function handleSubmitPhoto(event) {
 
-/*FUNCION DESTINADA A GESTIONAR EL ENVIO DEL FORMULARIO DE CREACIÓN DE FOTOS
+    /*FUNCION DESTINADA A GESTIONAR EL ENVIO DEL FORMULARIO DE CREACIÓN DE FOTOS
 
     En esta función, crearemos un objeto FormData a partir del formulario que está siendo
 enviado, y usaremos el módulo de API para enviarlo mediante una petición POST. Si la petición tiene éxito, redirigiremos al usuario de nuevo a la página principal para que pueda ver la
 nueva foto creada. Si hay algún fallo, mostraremos el mensaje
 
 */
-
-function handleSubmitPhoto(event) {
 
     event.preventDefault();
 
@@ -40,9 +39,7 @@ function handleSubmitPhoto(event) {
 
     for(let p of formData.entries()){
         console.log(p);
-        
-    } // de momento mi formdata tiene url, titulo, descripcion y visibilidad. Vaya, los campos del formulario
-
+    } 
  
     if ( currentPhoto === null ) { // CREACION DE FOTO
 
@@ -54,8 +51,10 @@ function handleSubmitPhoto(event) {
 
         /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
 
-        //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO - si el usuario ha subido al menos una
-        let dic={};
+        //CODIGO PARA ESTABLECER UN LIMITE DE FOTOS POR USUARIO 
+
+        let dic={}; //Contiene los usuarios que han subido fotos y el numero de 
+
         fallosAPI.getAll().then(
             data=>{
                
@@ -63,12 +62,8 @@ function handleSubmitPhoto(event) {
                     //console.log(d);
                     //Tengo la tabla
                     dic[d.userId] = d.NUM;
-                 
                 }
-
                 console.log(dic);
-                
-               
             }
         ).catch(error=>console.log(error));
 
@@ -87,14 +82,11 @@ function handleSubmitPhoto(event) {
                     alert("HA SUPERADO EL LIMITE DE FOTOS QUE PUEDE SUBIR");
                 }
                 
-            })
-                        .catch(  error => messageRenderer.showErrorMessage( error ));
+            }).catch(  error => messageRenderer.showErrorMessage( error ));
         
-        } else{ //quiere decir que el usuario todavia no ha subido una, asi que solo word
+        } else{ //quiere decir que el usuario todavia no ha subido una, asi que solo que pase el badwords
             wordValidator.validateRegister(formData, photoId, currentPhoto);
         }
-
-   
 
     } else if (currentPhoto !== null){ //EDICION DE FOTO
             
@@ -102,8 +94,6 @@ function handleSubmitPhoto(event) {
             formData.append(" date ", currentPhoto.date ) ;
 
             //antes de crear quiero que pase la validacion de las palabras
-
-        /*MENSAJES DE ERROR EN PANTALLA - Pone una cadena inicial vacia en la cabecera de register.html que para cada error, se va sustituyendo */
       
             wordValidator.validateRegister(formData, photoId, currentPhoto);
 
@@ -112,7 +102,9 @@ function handleSubmitPhoto(event) {
 
 }
 
-/*
+function loadCurrentPhoto() { 
+
+    /*
                                         FUNCION DESTINADA A 
 
 Modificar el título de la página para que sea “Editando una foto” en lugar de “Creando
@@ -127,8 +119,6 @@ tenga la foto que estamos editando.
 
 */
 
-function loadCurrentPhoto() {
-
     // document.getElementById están a null porque se toma como base el de creacion
 
     let pageTitle = document.getElementById("page-title") ;
@@ -141,11 +131,11 @@ function loadCurrentPhoto() {
 
     photosAPI.getById( photoId )
         .then( photos => {
-        currentPhoto = photos[0];
-        urlInput.value = currentPhoto.url;
-        titleInput.value = currentPhoto.title;
-        descriptionInput.value = currentPhoto.description;
-        visibilityInput.value = currentPhoto.visibility;
+            currentPhoto = photos[0];
+            urlInput.value = currentPhoto.url;
+            titleInput.value = currentPhoto.title;
+            descriptionInput.value = currentPhoto.description;
+            visibilityInput.value = currentPhoto.visibility;
         })
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 }

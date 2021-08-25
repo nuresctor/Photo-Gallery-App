@@ -18,7 +18,6 @@ const wordValidator = {
         .then( words => {
             
             for(let w of words){
-
                 arrayDB.push(w.palabra);
             }
 
@@ -33,7 +32,6 @@ const wordValidator = {
     
             /*COMPROBACIONES DE ATRIBUTOS */
             for(let palabra of arrayDB){
-               
                 if(titulo.match(palabra) || descripcion.match(palabra)) {
                     console.log("titulo="+titulo);
                     console.log("descripcion="+descripcion);
@@ -41,49 +39,45 @@ const wordValidator = {
                     errors.push(palabra);
                 }
             }
-            
-        console.log("WORDS errores="+errors);
 
         if(errors.length > 0) {
 
             let errorsDiv = document.getElementById("errors"); 
             errorsDiv.innerHTML = "";
-            //para cada error, renderizalo 
             for(let error of errors) {
                 messageRenderer.showErrorMessage(error);
             }
-        }   else if (currentPhoto === null && errors.length === 0 ){ //SI NO HAY BAD WORDS, CREA/EDITA LA FOTO
+        }   else if (currentPhoto === null && errors.length === 0 ){ //SI NO HAY BAD WORDS, CREA LA FOTO
     
             //creacion de foto-la añade al back
 
             photosAPI.create(formData).then( data => {
                     alert(" Foto creada !") ;
                     window.location.href = "index.html"
-                }
-                   ).catch( error => messageRenderer.showErrorMessage(error));
-        } else if(currentPhoto !== null && errors.length === 0) {
-    
-                alert(" Foto editada !") ;
+                }).catch( error => messageRenderer.showErrorMessage(error));
+
+        } else if(currentPhoto !== null && errors.length === 0) { //SI NO HAY BAD WORDS, EDITA LA FOTO
     
                 //editacion de la foto-la añade al back
     
                 photosAPI.update(photoId,formData)
-                    .then( data => window.location.href = "index.html")
+                    .then( data => {
+                        alert(" Foto editada !") ;
+                        window.location.href = "index.html"})
                     .catch( error => messageRenderer.showErrorMessage(error));
     
         }
 
 
-        })
-        .catch( error => messageRenderer.showErrorMessage( error ) ) ;
+        }).catch( error => messageRenderer.showErrorMessage( error ) ) ;
 
     },
 
     validateRegister2: function (formData) {
+
         let arrayDB=[];
         let errors = [];
 
-        //funcion que me saca las badwords del db
         wordsAPI.getAll()
         .then( words => {
             
@@ -91,6 +85,7 @@ const wordValidator = {
 
                 arrayDB.push(w.palabra);
             }
+
         let textarea = formData.get("value");
 
         for(let palabra of arrayDB){
@@ -105,11 +100,10 @@ const wordValidator = {
 
             let errorsDiv = document.getElementById("errors"); 
             errorsDiv.innerHTML = "";
-            //para cada error, renderizalo 
             for(let error of errors) {
                 messageRenderer.showErrorMessage(error);
             }
-        }else{
+        }else{ //SI NO HAY BAD WORDS, GUARDA EL COMENTARIO
             comentsAPI.create(formData).then(data=>{
                 alert("Comentario guardado correctamente");
                 window.location.href=window.location.search;

@@ -1,8 +1,6 @@
 /* ---------------------------------- CABECERA ---------------------------------------------- */
 "use strict"
 import {parseHTML} from "/js/utils/parseHTML.js"
-import {photosAPI} from "/js/api/photos.js";
-import {usersAPI} from "/js/api/users.js";
 /* ---------------------------------- CUERPO ---------------------------------------------- */
 
 const userRender ={
@@ -22,10 +20,7 @@ const userRender ={
         <hr >
         </div >`;
 
-        console.log(user.telephone);
-        console.log(user.avatarUrl);
         let userDetails = parseHTML(html);
-        console.log(userDetails);
         return userDetails;
     }
 
