@@ -73,12 +73,12 @@ nueva foto creada. Si hay algún fallo, mostraremos el mensaje
             photos_usersAPI.getById(userId)
             .then( data => {
         
-                if(data.length<3){
+                if(data.length<2){
                     //Deja crear la foto
                     wordValidator.validateRegister(formData, photoId, currentPhoto);
                 }
         
-                else if(data.length>=3) { //si supera el límite
+                else if(data.length>=2) { //si supera el límite
                     alert("HA SUPERADO EL LIMITE DE FOTOS QUE PUEDE SUBIR");
                 }
                 
