@@ -37,6 +37,18 @@ let comentId;
         })).catch(error=>console.log(error));
         
     }
+///////////////////////////////////////////////////////////////////////////////////////////////
+    function handleCommentEdit(event){
+        let items = [].slice.call(document.getElementsByClassName("comment-author mr-half"));
+        var input = document.createElement("textarea");
+        input.name = "post";
+        input.maxLength = "5000";
+        input.cols = "80";
+        input.rows = "40";
+        console.log(comentId);
+       items[comentId].appendChild(input);
+
+    }
 
     function handleCommentDelete(event){
       
@@ -195,13 +207,18 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
                 let gallery = comentRender.asCardGallery(coments, photoId);
                 container.appendChild(gallery);
 
-                //CODIGO DE PRUEBA TEMPO
+                //CODIGO PARA BORRAR-EDITAR LOS COMENTARIOS
             window.onload=function(){
-                let items = [].slice.call(document.getElementsByClassName("basura"));
+                let items_basura = [].slice.call(document.getElementsByClassName("basura"));
+                let items_edit = [].slice.call(document.getElementsByClassName("edit"));
             //let items2=Array.from(document.getElementsByClassName("basura"));
-            for(let i of items){
-                comentId=items.indexOf(i)+1;
+            for(let i of items_basura){
+                comentId=items_basura.indexOf(i)+1; //NO PUEDO HACERLO ASI PORQUE SI BORRO UNA FOTO YA LOS IDS CAMBIAN
               i.addEventListener("click",handleCommentDelete);  
+            }
+            for(let i of items_edit){
+                
+              i.addEventListener("click",handleCommentEdit);  
             }
             };
             

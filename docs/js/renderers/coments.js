@@ -21,6 +21,7 @@ const comentRender = {
             <h6 style="font-weight:50"> ${c.date} </h6 > 
             <img src= "${user.avatarUrl}" class= "img-circle" width="80" height="80" > 
             <a  class="basura" >🗑</a>
+            <a  class="edit" >🖍</a>
 
             <div class= "flex-col flex-grow">
             <cite class="strong fn">
