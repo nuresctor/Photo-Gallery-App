@@ -18,9 +18,10 @@ const comentRender = {
             <div class= "flex-rox align-top">
             <div class= "flex-col">
             <div class= "comment-author mr-half"> 
-           
-            <img src= "${user.avatarUrl}" class= "img-circle" width="50" height="50" > <h6 style="font-weight:50"> ${c.date} </h6 > 
-            
+            <h6 style="font-weight:50"> ${c.date} </h6 > 
+            <img src= "${user.avatarUrl}" class= "img-circle" width="80" height="80" > 
+            <a  class="basura" >🗑</a>
+
             <div class= "flex-col flex-grow">
             <cite class="strong fn">
             <a href= "user_profile.html?userId=${c.userId}" class= "user-link user-name" >
@@ -36,7 +37,10 @@ const comentRender = {
             </div >
             </div >
             </article >
-            </li >`;
+            </li >
+    
+
+            `;
            
             let card = parseHTML(html);
            

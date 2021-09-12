@@ -23,4 +23,5 @@ VALUES
 
 INSERT INTO Coments(comentId, userId, photoId, value, date) VALUES
 	(1,2,1,"Qué mala pinta","2021-08-23 23:25:24"),
-	(2,2,1,"Quería decir buena*","2021-08-23 23:33:10");
+	(2,1,1,"Comentario 2","2021-08-23 13:25:24"),
+	(3,2,1,"Quería decir buena*","2021-08-23 23:33:10");

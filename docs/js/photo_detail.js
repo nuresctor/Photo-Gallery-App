@@ -14,7 +14,7 @@ import {wordValidator} from "/js/validators/words.js";
 let urlParams = new URLSearchParams(window.location.search) ;
 let photoId = urlParams.get("photoId") ;
 let userId = sessionManager.getLoggedId() ;
-
+let comentId;
     ///////////////////////////////// FUNCIONES AUXILIARRES////////////////////////////////////////////
 
     function hideActionsColumn() {
@@ -36,6 +36,17 @@ let userId = sessionManager.getLoggedId() ;
             }
         })).catch(error=>console.log(error));
         
+    }
+
+    function handleCommentDelete(event){
+      
+       let answer = confirm("Do you really want to delete this comment ?") ;
+
+        if(answer) {
+        comentsAPI.delete(comentId)
+        .then( data => window.location.href = window.location.search)
+        .catch( error => console.log(error));
+        }
     }
 
     function handleDelete(event) {
@@ -183,6 +194,21 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
         
                 let gallery = comentRender.asCardGallery(coments, photoId);
                 container.appendChild(gallery);
+
+                //CODIGO DE PRUEBA TEMPO
+            window.onload=function(){
+                let items = [].slice.call(document.getElementsByClassName("basura"));
+            //let items2=Array.from(document.getElementsByClassName("basura"));
+            for(let i of items){
+                comentId=items.indexOf(i)+1;
+              i.addEventListener("click",handleCommentDelete);  
+            }
+            };
+            
+
+
+          
+            
         
     }).catch( error => console.log(error) ) ;
 
@@ -201,6 +227,7 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
             //document.getElementById ("borrar_foto").addEventListener ("click",console.log("Foto cargada2"));
             document.getElementById ("borrar_foto").addEventListener ("click",handleDelete);
             document.getElementById ("editar_foto").addEventListener ("click",handleEdit);
+            
 
             if (!sessionManager.isLogged() ) {
     
@@ -228,4 +255,5 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
 }
 
     document.addEventListener("DOMContentLoaded", main);
+    
     
