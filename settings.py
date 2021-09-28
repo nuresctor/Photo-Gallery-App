@@ -8,7 +8,7 @@ DEBUG_ENABLED = False
 # Database connection details
 DB_CONN = {
     "host": "127.0.0.1",
-    "port": 3306,
+    "port": 3366,
     "username": "root",
     "password": "nuresctor",
     "database": "pf",
@@ -21,7 +21,8 @@ SQL_SCRIPTS = [
     "create_tables.sql",
     "create_views.sql",
     "populate_database.sql",
-    "create_triggers.sql"
+    "create_triggers.sql",
+    "mobiles.sql"
 ]
 
 # The port in which the API and the web server will be deployed

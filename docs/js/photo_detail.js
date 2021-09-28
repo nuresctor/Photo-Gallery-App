@@ -208,18 +208,17 @@ LO QUE TENIA ANTES PUESTO DE LOS BOTONES POR SI FALLA ALGO
                 container.appendChild(gallery);
 
                 //CODIGO PARA BORRAR-EDITAR LOS COMENTARIOS
+
             window.onload=function(){
+                
                 let items_basura = [].slice.call(document.getElementsByClassName("basura"));
                 let items_edit = [].slice.call(document.getElementsByClassName("edit"));
             //let items2=Array.from(document.getElementsByClassName("basura"));
             for(let i of items_basura){
-                comentId=items_basura.indexOf(i)+1; //NO PUEDO HACERLO ASI PORQUE SI BORRO UNA FOTO YA LOS IDS CAMBIAN
-              i.addEventListener("click",handleCommentDelete);  
+                comentId=i.id; //NO PUEDO HACERLO ASI PORQUE SI BORRO UNA FOTO YA LOS IDS CAMBIAN
+              i.addEventListener("click",alert("PFFF"));  
             }
-            for(let i of items_edit){
-                
-              i.addEventListener("click",handleCommentEdit);  
-            }
+           
             };
             
 

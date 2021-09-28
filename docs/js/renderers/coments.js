@@ -20,7 +20,7 @@ const comentRender = {
             <div class= "comment-author mr-half"> 
             <h6 style="font-weight:50"> ${c.date} </h6 > 
             <img src= "${user.avatarUrl}" class= "img-circle" width="80" height="80" > 
-            <a  class="basura" >🗑</a>
+            <a id="${c.comentId}" class="basura" >🗑</a>
             <a  class="edit" >🖍</a>
 
             <div class= "flex-col flex-grow">
