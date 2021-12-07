@@ -140,8 +140,6 @@ tenga la foto que estamos editando.
         .catch( error => messageRenderer.showErrorMessage( error ) ) ;
 }
 
-
-
 function main() {
 
     cabecera.showUser();
